@@ -42,12 +42,10 @@ public class BatchConfiguration {
 
     @Bean
     public JdbcBatchItemWriter<Person> writer(DataSource dataSource) {
+        final String sql = "INSERT INTO people (id, first_name, last_name) VALUES (:id, :firstName, :lastName)";
         return new JdbcBatchItemWriterBuilder<Person>()
                 .itemSqlParameterSourceProvider(
                         new BeanPropertyItemSqlParameterSourceProvider<>())
-                            .sql("INSERT INTO people (id, first_name, last_name) VALUES (:id, :firstName, :lastName)")
-                            .dataSource(dataSource)
-                .build();
-
+                            .sql(sql).dataSource(dataSource).build();
     }
 }
