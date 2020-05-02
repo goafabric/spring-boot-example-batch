@@ -1,0 +1,14 @@
+## persistence section
+spring:
+  datasource:
+    url: jdbc:h2:mem:catalog
+    #      url: jdbc:postgresql://localhost:50710/countrydb
+    username: example-service
+    password: example-service
+
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 10000 #timeout in ms
+
+  flyway:
+    locations: classpath:db/migration
