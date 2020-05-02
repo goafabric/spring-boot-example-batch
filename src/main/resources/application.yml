@@ -1,10 +1,10 @@
 ## persistence section
 spring:
   datasource:
-    url: jdbc:h2:mem:catalog
-    #      url: jdbc:postgresql://localhost:50710/countrydb
-    username: example-service
-    password: example-service
+    #url: jdbc:h2:mem:catalogs
+    url: jdbc:postgresql://localhost:5432/catalogs
+    username: postgres
+    password: postgres
 
     hikari:
       maximum-pool-size: 10

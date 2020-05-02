@@ -22,6 +22,7 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
 
             jdbcTemplate.query("SELECT first_name, last_name FROM people",
                     (rs, row) -> new Person(
+                            null,
                             rs.getString(1),
                             rs.getString(2))
             ).forEach(person -> log.info("Found <" + person + "> in the database."));
