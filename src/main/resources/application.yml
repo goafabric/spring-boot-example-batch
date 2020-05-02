@@ -12,3 +12,7 @@ spring:
 
   flyway:
     locations: classpath:db/migration
+
+  batch:
+    job:
+      enabled: false
