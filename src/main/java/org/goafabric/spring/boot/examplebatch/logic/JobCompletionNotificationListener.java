@@ -1,4 +1,4 @@
-package org.goafabric.spring.boot.examplebatch.configuration;
+package org.goafabric.spring.boot.examplebatch.logic;
 
 import lombok.extern.slf4j.Slf4j;
 import org.goafabric.spring.boot.examplebatch.dto.Person;

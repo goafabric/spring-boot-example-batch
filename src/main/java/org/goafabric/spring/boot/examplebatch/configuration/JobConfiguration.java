@@ -1,6 +1,7 @@
 package org.goafabric.spring.boot.examplebatch.configuration;
 
 import org.goafabric.spring.boot.examplebatch.dto.Person;
+import org.goafabric.spring.boot.examplebatch.logic.JobCompletionNotificationListener;
 import org.goafabric.spring.boot.examplebatch.logic.PersonItemProcessor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
