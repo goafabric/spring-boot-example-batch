@@ -1,0 +1,6 @@
+Todo
+
+- flyway, schema
+- versionierung
+- monitoring der tabellen und errorhandling
+- docker
