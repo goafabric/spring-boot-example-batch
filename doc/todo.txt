@@ -1,6 +1,5 @@
 Todo
-
-- flyway, schema
+- schema
 - versionierung
 - monitoring der tabellen und errorhandling
 - docker
