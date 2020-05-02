@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 
+//meta data is stored in memory, no need for spring batch meta data tables inside database
 @Component
 public class NoPersistenceBatchConfigurer extends DefaultBatchConfigurer {
     @Override
