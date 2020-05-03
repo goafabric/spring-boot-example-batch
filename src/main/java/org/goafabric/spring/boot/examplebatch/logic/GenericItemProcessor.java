@@ -10,10 +10,8 @@ import java.util.UUID;
 
 @Slf4j
 public class GenericItemProcessor<T> implements ItemProcessor<T , T> {
-    private String catalogVersion = "1";
-
     @Value("#{jobParameters[catalogVersion]}")
-    private String catalogVersion2;
+    private String catalogVersion;
 
 
     @Override
