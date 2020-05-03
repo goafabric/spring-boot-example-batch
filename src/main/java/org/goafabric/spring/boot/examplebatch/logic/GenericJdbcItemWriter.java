@@ -18,9 +18,6 @@ public class GenericJdbcItemWriter<T> extends JdbcBatchItemWriter<T> {
     @Autowired
     private DataSource dataSource;
 
-    @Value("#{jobParameters[catalogVersion]}")
-    private String catalogVersion;
-
     private final String sql;
 
     public GenericJdbcItemWriter(String sql) {
@@ -42,6 +39,9 @@ public class GenericJdbcItemWriter<T> extends JdbcBatchItemWriter<T> {
 
         doVersionhandling(sql);
     }
+
+    @Value("#{jobParameters[catalogVersion]}")
+    private String catalogVersion;
 
     private void doVersionhandling(String sql) {
         final String tableName = sql.split("INSERT INTO ")[1].split(" ")[0];
