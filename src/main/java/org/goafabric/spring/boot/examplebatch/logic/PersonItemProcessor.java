@@ -20,6 +20,7 @@ public class PersonItemProcessor implements ItemProcessor<Person , Person> {
 
         log.info("Converting (" + person + ") into (" + transformedPerson + ")");
 
+        
         return transformedPerson;
     }
 }

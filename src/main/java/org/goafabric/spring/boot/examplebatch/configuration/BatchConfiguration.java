@@ -2,6 +2,7 @@ package org.goafabric.spring.boot.examplebatch.configuration;
 
 import org.goafabric.spring.boot.examplebatch.dto.Person;
 import org.goafabric.spring.boot.examplebatch.logic.PersonItemProcessor;
+import org.goafabric.spring.boot.examplebatch.logic.PersonItemWriter;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -43,10 +44,14 @@ public class BatchConfiguration {
 
     @Bean
     public JdbcBatchItemWriter<Person> writer(DataSource dataSource) {
+        return new PersonItemWriter();
+        /*
         final String sql = "INSERT INTO people (id, first_name, last_name) VALUES (:id, :firstName, :lastName)";
         return new JdbcBatchItemWriterBuilder<Person>()
                 .itemSqlParameterSourceProvider(
                         new BeanPropertyItemSqlParameterSourceProvider<>())
                             .sql(sql).dataSource(dataSource).build();
+
+         */
     }
 }
