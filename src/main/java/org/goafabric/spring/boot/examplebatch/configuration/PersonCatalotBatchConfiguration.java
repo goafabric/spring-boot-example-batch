@@ -35,7 +35,6 @@ public class PersonCatalotBatchConfiguration {
     }
 
     @Bean
-    @StepScope
     public ItemProcessor<Person , Person> personProcessor() {
         return new GenericItemProcessor();
     }

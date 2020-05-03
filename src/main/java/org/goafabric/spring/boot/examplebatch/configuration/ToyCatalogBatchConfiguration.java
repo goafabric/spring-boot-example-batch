@@ -37,7 +37,6 @@ public class ToyCatalogBatchConfiguration {
     }
 
     @Bean
-    @StepScope
     public ItemProcessor<Person , Person> toyCatalogProcessor() {
         return new GenericItemProcessor();
     }
