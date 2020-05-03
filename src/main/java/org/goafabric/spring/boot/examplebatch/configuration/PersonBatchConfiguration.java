@@ -2,7 +2,7 @@ package org.goafabric.spring.boot.examplebatch.configuration;
 
 import org.goafabric.spring.boot.examplebatch.dto.Person;
 import org.goafabric.spring.boot.examplebatch.logic.JobCompletionNotificationListener;
-import org.goafabric.spring.boot.examplebatch.logic.PersonItemProcessor;
+import org.goafabric.spring.boot.examplebatch.logic.GenericItemProcessor;
 import org.goafabric.spring.boot.examplebatch.logic.GenericFileItemReader;
 import org.goafabric.spring.boot.examplebatch.logic.GenericJdbcItemWriter;
 import org.springframework.batch.core.Job;
@@ -35,7 +35,7 @@ public class PersonBatchConfiguration {
 
     @Bean
     public ItemProcessor<Person , Person> processor() {
-        return new PersonItemProcessor();
+        return new GenericItemProcessor();
     }
 
     @Bean
