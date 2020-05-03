@@ -32,6 +32,8 @@ public class JobStarter {
 
         jobLauncher.run(personJob, jobParameters);
 
+        //jobLauncher.run(personJob, new JobParametersBuilder().addString("catalogVersion", "10").addString("dummy", "dummy").toJobParameters());
+
         jobLauncher.run(toyCatalogJob, jobParameters);
     }
 }

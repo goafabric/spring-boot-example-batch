@@ -20,7 +20,7 @@ public class JobCompletionNotificationListener extends JobExecutionListenerSuppo
         if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
             log.info("Job finished: {}", jobExecution.getJobInstance().getJobName());
         } else {
-            log.info("There was a problem with jor job: {}", jobExecution.getJobInstance().getJobName());
+            log.error("There was a problem with jor job: {}", jobExecution.getJobInstance().getJobName());
         }
     }
 

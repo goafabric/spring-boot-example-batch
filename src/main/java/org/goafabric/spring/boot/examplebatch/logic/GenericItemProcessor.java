@@ -13,7 +13,6 @@ public class GenericItemProcessor<T> implements ItemProcessor<T , T> {
     @Value("#{jobParameters[catalogVersion]}")
     private String catalogVersion;
 
-
     @Override
     public T process(T object) {
         setId(object);
