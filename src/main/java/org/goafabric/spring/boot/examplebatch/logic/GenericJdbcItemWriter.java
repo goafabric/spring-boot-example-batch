@@ -25,6 +25,7 @@ public class GenericJdbcItemWriter<T> extends JdbcBatchItemWriter<T> {
         super.write(items);
     }
 
+    //Generate efficient JDBC writer with batch update, with the given Pojo
     @Override
     public void afterPropertiesSet() {
         this.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());

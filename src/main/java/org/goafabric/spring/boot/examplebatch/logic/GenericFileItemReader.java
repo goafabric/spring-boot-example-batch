@@ -29,6 +29,7 @@ public class GenericFileItemReader<T> extends FlatFileItemReader<T> {
         super.afterPropertiesSet();
     }
 
+    //generate LineMapper for CSV file, with "," delimiter and for the given ClassType
     private DefaultLineMapper<T> createLineMapper() {
         final DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer(",");
         tokenizer.setNames(fieldNames);
