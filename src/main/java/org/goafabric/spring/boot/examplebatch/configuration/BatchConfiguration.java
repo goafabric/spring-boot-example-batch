@@ -18,19 +18,19 @@ import javax.sql.DataSource;
 public class BatchConfiguration {
 
     @Bean
-    public FlatFileItemReader<Person> reader() {
-        return new GenericFileItemReader<Person>(Person.class,
+    public FlatFileItemReader<Person> personReader() {
+        return new GenericFileItemReader<>(Person.class,
                 "sample-data.csv", new String[]{"firstName", "lastName"});
     }
 
     @Bean
-    public ItemProcessor<Person , Person> processor() {
+    public ItemProcessor<Person , Person> personProcessor() {
         return new PersonItemProcessor();
     }
 
     @Bean
-    public JdbcBatchItemWriter<Person> writer(DataSource dataSource) {
+    public JdbcBatchItemWriter<Person> personWriter() {
         final String sql = "INSERT INTO people (id, first_name, last_name) VALUES (:id, :firstName, :lastName)";
-        return new GenericJdbcItemWriter<Person>(sql);
+        return new GenericJdbcItemWriter<>(sql);
     }
 }

@@ -25,24 +25,24 @@ public class JobConfiguration {
 
 
     @Bean
-    public Job importUserJob(JobCompletionNotificationListener listener, Step step1) {
-        return jobBuilderFactory.get("importUserJob")
+    public Job personJob(JobCompletionNotificationListener listener, Step personStep) {
+        return jobBuilderFactory.get("personJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
-                .flow(step1)
+                .flow(personStep)
                 .end()
                 .build();
     }
 
     @Bean
-    public Step step1(ItemReader<Person> reader,
-                      ItemProcessor<Person , Person> processor,
-                      JdbcBatchItemWriter<Person> writer) {
-        return stepBuilderFactory.get("step1")
+    public Step personStep(ItemReader<Person> personReader,
+                           ItemProcessor<Person , Person> personProcessor,
+                           JdbcBatchItemWriter<Person> personWriter) {
+        return stepBuilderFactory.get("personStep")
                 .<Person, Person> chunk(10)//defines how much data is written at a time
-                .reader(reader)
-                .processor(processor)
-                .writer(writer)
+                .reader(personReader)
+                .processor(personProcessor)
+                .writer(personWriter)
                 .build();
     }
 }

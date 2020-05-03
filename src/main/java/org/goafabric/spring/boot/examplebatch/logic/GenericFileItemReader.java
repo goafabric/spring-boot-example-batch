@@ -1,12 +1,16 @@
 package org.goafabric.spring.boot.examplebatch.logic;
 
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.batch.item.ParseException;
+import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.core.io.ClassPathResource;
 
+@Slf4j
 public class GenericFileItemReader<T> extends FlatFileItemReader<T> {
     final String fileName;
     final String[] fieldNames;

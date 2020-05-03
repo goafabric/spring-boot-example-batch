@@ -18,11 +18,11 @@ public class JobStarter {
     private JobLauncher jobLauncher;
 
     @Autowired
-    private Job importUserJob;
+    private Job personJob;
 
 
     @PostConstruct
     public void start() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-        jobLauncher.run(importUserJob, new JobParameters());
+        jobLauncher.run(personJob, new JobParameters());
     }
 }
