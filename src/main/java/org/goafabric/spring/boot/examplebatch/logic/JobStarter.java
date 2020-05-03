@@ -2,6 +2,7 @@ package org.goafabric.spring.boot.examplebatch.logic;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.JobParametersInvalidException;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -26,8 +27,11 @@ public class JobStarter {
 
     @PostConstruct
     public void start() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-        jobLauncher.run(personJob, new JobParameters());
+        final JobParameters jobParameters = new JobParametersBuilder()
+                .addString("catalogVersion", "10").toJobParameters();
 
-        jobLauncher.run(toyCatalogJob, new JobParameters());
+        jobLauncher.run(personJob, jobParameters);
+
+        jobLauncher.run(toyCatalogJob, jobParameters);
     }
 }

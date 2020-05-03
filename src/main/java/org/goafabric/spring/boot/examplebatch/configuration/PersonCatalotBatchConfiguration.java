@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableBatchProcessing
-public class PersonBatchConfiguration {
+public class PersonCatalotBatchConfiguration {
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
 

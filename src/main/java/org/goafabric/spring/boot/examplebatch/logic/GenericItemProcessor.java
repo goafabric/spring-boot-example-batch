@@ -1,7 +1,6 @@
 package org.goafabric.spring.boot.examplebatch.logic;
 
 import lombok.extern.slf4j.Slf4j;
-import org.goafabric.spring.boot.examplebatch.dto.Person;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.util.ReflectionUtils;
 
@@ -28,6 +27,6 @@ public class GenericItemProcessor<T> implements ItemProcessor<T , T> {
     private void setCatalogVersion(T object) {
         final Field fieldCatalogVersion = ReflectionUtils.findField(object.getClass(), "catalogVersion");
         fieldCatalogVersion.setAccessible(true);
-        ReflectionUtils.setField(fieldCatalogVersion, object, UUID.randomUUID().toString());
+        ReflectionUtils.setField(fieldCatalogVersion, object, catalogVersion);
     }
 }
