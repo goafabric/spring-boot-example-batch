@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class JobCompletionNotificationListener extends JobExecutionListenerSupport {
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public void afterJob(JobExecution jobExecution) {
