@@ -40,7 +40,7 @@ public class PersonBatchConfiguration {
 
     @Bean
     public JdbcBatchItemWriter<Person> personWriter() {
-        final String sql = "INSERT INTO people (id, first_name, last_name) VALUES (:id, :firstName, :lastName)";
+        final String sql = "INSERT INTO people (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
         return new GenericJdbcItemWriter<>(sql);
     }
 

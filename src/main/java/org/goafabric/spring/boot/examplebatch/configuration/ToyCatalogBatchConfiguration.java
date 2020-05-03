@@ -41,7 +41,7 @@ public class ToyCatalogBatchConfiguration {
 
     @Bean
     public JdbcBatchItemWriter<Person> toyCatalogWriter() {
-        final String sql = "INSERT INTO toy_catalog (id, toy_name, price) VALUES (:id, :toyName, :price)";
+        final String sql = "INSERT INTO toy_catalog (id, catalog_version, toy_name, price) VALUES (:id, :catalogVersion, :toyName, :price)";
         return new GenericJdbcItemWriter<>(sql);
     }
 

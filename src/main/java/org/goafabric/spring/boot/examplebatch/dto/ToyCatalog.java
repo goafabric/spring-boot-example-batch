@@ -13,4 +13,6 @@ public class ToyCatalog {
     private String id;
     private String toyName;
     private String price;
+
+    private String catalogVersion;
 }

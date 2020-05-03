@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @Slf4j
 public class GenericItemProcessor<T> implements ItemProcessor<T , T> {
+    private String catalogVersion = "1";
 
     @Override
     public T process(T object) {

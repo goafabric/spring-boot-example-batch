@@ -13,4 +13,6 @@ public class Person {
     private String id;
     private String lastName;
     private String firstName;
+
+    private String catalogVersion;
 }
