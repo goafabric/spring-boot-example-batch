@@ -20,13 +20,10 @@ public class GenericJdbcItemWriter<T> extends JdbcBatchItemWriter<T> {
         this.sql = sql;
     }
 
-    /*
     public void write(List<? extends T> items) throws Exception {
         items.forEach(item -> log.info("Writing item: {}", item));
         super.write(items);
     }
-
-     */
 
     @Override
     public void afterPropertiesSet() {
