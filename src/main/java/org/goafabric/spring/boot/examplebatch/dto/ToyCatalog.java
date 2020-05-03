@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ToyCatalog {
     private String id;
+    private String catalogVersion;
+
     private String toyName;
     private String price;
 
-    private String catalogVersion;
 }

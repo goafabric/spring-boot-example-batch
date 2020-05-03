@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Person {
     private String id;
+    private String catalogVersion;
+
     private String lastName;
     private String firstName;
-
-    private String catalogVersion;
 }

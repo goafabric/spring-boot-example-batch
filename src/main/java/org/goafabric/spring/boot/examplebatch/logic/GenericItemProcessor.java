@@ -14,9 +14,14 @@ public class GenericItemProcessor<T> implements ItemProcessor<T , T> {
 
     @Override
     public T process(T object) {
-        final Field field = ReflectionUtils.findField(object.getClass(), "id");
-        field.setAccessible(true);
-        ReflectionUtils.setField(field, object, UUID.randomUUID().toString());
+        final Field fieldId = ReflectionUtils.findField(object.getClass(), "id");
+        fieldId.setAccessible(true);
+        ReflectionUtils.setField(fieldId, object, UUID.randomUUID().toString());
+
+        final Field fieldCatalogVersion = ReflectionUtils.findField(object.getClass(), "catalogVersion");
+        fieldCatalogVersion.setAccessible(true);
+        ReflectionUtils.setField(fieldCatalogVersion, object, catalogVersion);
+
         return object;
     }
 }
