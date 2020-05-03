@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
 
-public class PersonItemWriter<T> extends JdbcBatchItemWriter<T> {
+public class GenericJdbcItemWriter<T> extends JdbcBatchItemWriter<T> {
     private final String sql;
 
     @Autowired
     private DataSource dataSource;
 
-    public PersonItemWriter(String sql) {
+    public GenericJdbcItemWriter(String sql) {
         this.sql = sql;
     }
 

@@ -7,12 +7,12 @@ import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.core.io.ClassPathResource;
 
-public class PersonItemReader<T> extends FlatFileItemReader<T> {
+public class GenericFileItemReader<T> extends FlatFileItemReader<T> {
     final String fileName;
     final String[] fieldNames;
     final Class classType;
 
-    public PersonItemReader(Class classType, String fileName, String[] fieldNames) {
+    public GenericFileItemReader(Class classType, String fileName, String[] fieldNames) {
         this.classType = classType;
         this.fileName = fileName;
         this.fieldNames = fieldNames;

@@ -10,17 +10,8 @@ import java.util.UUID;
 public class PersonItemProcessor implements ItemProcessor<Person , Person> {
 
     @Override
-    public Person process(Person person) throws Exception {
-        //transforming the Person by making everything uppercase
-        final Person transformedPerson = Person.builder()
-                .id(UUID.randomUUID().toString())
-                .firstName(person.getFirstName().toUpperCase())
-                .lastName(person.getLastName().toUpperCase())
-                .build();
-
-        log.info("Converting (" + person + ") into (" + transformedPerson + ")");
-
-        
-        return transformedPerson;
+    public Person process(Person person) {
+        person.setId(UUID.randomUUID().toString());
+        return person;
     }
 }
