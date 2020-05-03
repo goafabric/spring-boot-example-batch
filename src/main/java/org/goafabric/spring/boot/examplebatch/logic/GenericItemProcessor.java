@@ -2,6 +2,7 @@ package org.goafabric.spring.boot.examplebatch.logic;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
@@ -10,6 +11,10 @@ import java.util.UUID;
 @Slf4j
 public class GenericItemProcessor<T> implements ItemProcessor<T , T> {
     private String catalogVersion = "1";
+
+    @Value("#{jobParameters[catalogVersion]}")
+    private String catalogVersion2;
+
 
     @Override
     public T process(T object) {
