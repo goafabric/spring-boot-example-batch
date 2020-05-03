@@ -1,10 +1,11 @@
 package org.goafabric.spring.boot.examplebatch.configuration;
 
 import org.goafabric.spring.boot.examplebatch.dto.Person;
-import org.goafabric.spring.boot.examplebatch.logic.JobCompletionNotificationListener;
-import org.goafabric.spring.boot.examplebatch.logic.GenericItemProcessor;
+import org.goafabric.spring.boot.examplebatch.dto.ToyCatalog;
 import org.goafabric.spring.boot.examplebatch.logic.GenericFileItemReader;
+import org.goafabric.spring.boot.examplebatch.logic.GenericItemProcessor;
 import org.goafabric.spring.boot.examplebatch.logic.GenericJdbcItemWriter;
+import org.goafabric.spring.boot.examplebatch.logic.JobCompletionNotificationListener;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -20,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableBatchProcessing
-public class PersonBatchConfiguration {
+public class ToyCatalogBatchConfiguration {
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
 
@@ -28,35 +29,35 @@ public class PersonBatchConfiguration {
     private StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public FlatFileItemReader<Person> personReader() {
-        return new GenericFileItemReader<>(Person.class,
-                "sample-data.csv", new String[]{"firstName", "lastName"});
+    public FlatFileItemReader<Person> toyCatalogReader() {
+        return new GenericFileItemReader<>(ToyCatalog.class,
+                "sample-data.csv", new String[]{"toyName", "price"});
     }
 
     @Bean
-    public ItemProcessor<Person , Person> personProcessor() {
+    public ItemProcessor<Person , Person> toyCatalogProcessor() {
         return new GenericItemProcessor();
     }
 
     @Bean
-    public JdbcBatchItemWriter<Person> personWriter() {
-        final String sql = "INSERT INTO people (id, first_name, last_name) VALUES (:id, :firstName, :lastName)";
+    public JdbcBatchItemWriter<Person> toyCatalogWriter() {
+        final String sql = "INSERT INTO toy_catalog (id, toy_name, price) VALUES (:id, :toyName, :price)";
         return new GenericJdbcItemWriter<>(sql);
     }
 
     @Bean
-    public Job personJob(JobCompletionNotificationListener listener) {
-        return jobBuilderFactory.get("personJob")
+    public Job toyCatalogJob(JobCompletionNotificationListener listener) {
+        return jobBuilderFactory.get("toyCatalogJob")
                 .incrementer(new RunIdIncrementer())
-                .listener(listener).flow(personStep()).end()
+                .listener(listener).flow(toyCatalogStep()).end()
                 .build();
     }
 
     @Bean
-    public Step personStep() {
-        return stepBuilderFactory.get("personStep")
+    public Step toyCatalogStep() {
+        return stepBuilderFactory.get("toyCatalogStep")
                 .<Person, Person> chunk(10)//defines how much data is written at a time
-                .reader(personReader()).processor(personProcessor()).writer(personWriter())
+                .reader(toyCatalogReader()).processor(toyCatalogProcessor()).writer(toyCatalogWriter())
                 .build();
     }
 }

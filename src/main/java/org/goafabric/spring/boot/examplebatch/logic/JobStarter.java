@@ -20,9 +20,14 @@ public class JobStarter {
     @Autowired
     private Job personJob;
 
+    @Autowired
+    private Job toyCatalogJob;
+
 
     @PostConstruct
     public void start() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         jobLauncher.run(personJob, new JobParameters());
+
+        jobLauncher.run(toyCatalogJob, new JobParameters());
     }
 }
