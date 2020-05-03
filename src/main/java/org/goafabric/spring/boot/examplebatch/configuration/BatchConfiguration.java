@@ -27,19 +27,8 @@ public class BatchConfiguration {
 
     @Bean
     public FlatFileItemReader<Person> reader() {
-        return new PersonItemReader("sample-data.csv", new String[]{"firstName", "lastName"});
-        /*
-        return new FlatFileItemReaderBuilder<Person>()
-                .name("personItemReader")
-                .resource(new ClassPathResource("sample-data.csv"))
-                .delimited()
-                .names(new String[]{"firstName", "lastName"})
-                .fieldSetMapper(new BeanWrapperFieldSetMapper<Person>() {{
-                    setTargetType(Person.class);
-                }})
-                .build();
-
-         */
+        return new PersonItemReader<Person>(Person.class,
+                "sample-data.csv", new String[]{"firstName", "lastName"});
     }
 
     @Bean
@@ -50,14 +39,6 @@ public class BatchConfiguration {
     @Bean
     public JdbcBatchItemWriter<Person> writer(DataSource dataSource) {
         final String sql = "INSERT INTO people (id, first_name, last_name) VALUES (:id, :firstName, :lastName)";
-        return new PersonItemWriter(sql);
-        /*
-        final String sql = "INSERT INTO people (id, first_name, last_name) VALUES (:id, :firstName, :lastName)";
-        return new JdbcBatchItemWriterBuilder<Person>()
-                .itemSqlParameterSourceProvider(
-                        new BeanPropertyItemSqlParameterSourceProvider<>())
-                            .sql(sql).dataSource(dataSource).build();
-
-         */
+        return new PersonItemWriter<Person>(sql);
     }
 }
