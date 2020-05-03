@@ -5,7 +5,7 @@ import org.goafabric.spring.boot.examplebatch.dto.ToyCatalog;
 import org.goafabric.spring.boot.examplebatch.logic.GenericFileItemReader;
 import org.goafabric.spring.boot.examplebatch.logic.GenericItemProcessor;
 import org.goafabric.spring.boot.examplebatch.logic.GenericJdbcItemWriter;
-import org.goafabric.spring.boot.examplebatch.logic.JobCompletionNotificationListener;
+import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -17,7 +17,6 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -49,7 +48,7 @@ public class ToyCatalogBatchConfiguration {
     }
 
     @Bean
-    public Job toyCatalogJob(JobCompletionNotificationListener listener) {
+    public Job toyCatalogJob(JobCompletionListener listener) {
         return jobBuilderFactory.get("toyCatalogJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(listener).flow(toyCatalogStep()).end()

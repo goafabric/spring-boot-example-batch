@@ -1,7 +1,7 @@
 package org.goafabric.spring.boot.examplebatch.configuration;
 
 import org.goafabric.spring.boot.examplebatch.dto.Person;
-import org.goafabric.spring.boot.examplebatch.logic.JobCompletionNotificationListener;
+import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
 import org.goafabric.spring.boot.examplebatch.logic.GenericItemProcessor;
 import org.goafabric.spring.boot.examplebatch.logic.GenericFileItemReader;
 import org.goafabric.spring.boot.examplebatch.logic.GenericJdbcItemWriter;
@@ -47,7 +47,7 @@ public class PersonCatalotBatchConfiguration {
     }
 
     @Bean
-    public Job personJob(JobCompletionNotificationListener listener) {
+    public Job personJob(JobCompletionListener listener) {
         return jobBuilderFactory.get("personJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(listener).flow(personStep()).end()
