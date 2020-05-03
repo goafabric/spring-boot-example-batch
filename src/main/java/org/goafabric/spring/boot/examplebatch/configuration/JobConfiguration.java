@@ -8,6 +8,7 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class JobConfiguration {
 
     @Bean
     public Step step1(ItemReader<Person> reader,
-                      PersonItemProcessor processor,
+                      ItemProcessor<Person , Person> processor,
                       JdbcBatchItemWriter<Person> writer) {
         return stepBuilderFactory.get("step1")
                 .<Person, Person> chunk(10)//defines how much data is written at a time

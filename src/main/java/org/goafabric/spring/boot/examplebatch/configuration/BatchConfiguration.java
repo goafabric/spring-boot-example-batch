@@ -5,6 +5,7 @@ import org.goafabric.spring.boot.examplebatch.logic.PersonItemProcessor;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
@@ -36,7 +37,7 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public PersonItemProcessor processor() {
+    public ItemProcessor<Person , Person> processor() {
         return new PersonItemProcessor();
     }
 
