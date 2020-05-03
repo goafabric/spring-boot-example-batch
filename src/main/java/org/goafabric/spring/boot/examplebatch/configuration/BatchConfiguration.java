@@ -2,6 +2,7 @@ package org.goafabric.spring.boot.examplebatch.configuration;
 
 import org.goafabric.spring.boot.examplebatch.dto.Person;
 import org.goafabric.spring.boot.examplebatch.logic.PersonItemProcessor;
+import org.goafabric.spring.boot.examplebatch.logic.PersonItemReader;
 import org.goafabric.spring.boot.examplebatch.logic.PersonItemWriter;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -26,6 +27,8 @@ public class BatchConfiguration {
 
     @Bean
     public FlatFileItemReader<Person> reader() {
+        return new PersonItemReader("sample-data.csv", new String[]{"firstName", "lastName"});
+        /*
         return new FlatFileItemReaderBuilder<Person>()
                 .name("personItemReader")
                 .resource(new ClassPathResource("sample-data.csv"))
@@ -35,6 +38,8 @@ public class BatchConfiguration {
                     setTargetType(Person.class);
                 }})
                 .build();
+
+         */
     }
 
     @Bean
@@ -44,7 +49,8 @@ public class BatchConfiguration {
 
     @Bean
     public JdbcBatchItemWriter<Person> writer(DataSource dataSource) {
-        return new PersonItemWriter();
+        final String sql = "INSERT INTO people (id, first_name, last_name) VALUES (:id, :firstName, :lastName)";
+        return new PersonItemWriter(sql);
         /*
         final String sql = "INSERT INTO people (id, first_name, last_name) VALUES (:id, :firstName, :lastName)";
         return new JdbcBatchItemWriterBuilder<Person>()

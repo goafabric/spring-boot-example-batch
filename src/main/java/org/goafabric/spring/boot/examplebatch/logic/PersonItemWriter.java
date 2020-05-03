@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.sql.DataSource;
 
 public class PersonItemWriter extends JdbcBatchItemWriter<Person> {
-    private final String sql = "INSERT INTO people (id, first_name, last_name) VALUES (:id, :firstName, :lastName)";
+    private final String sql;
 
     @Autowired
     private DataSource dataSource;
+
+    public PersonItemWriter(String sql) {
+        this.sql = sql;
+    }
 
     @Override
     public void afterPropertiesSet() {
