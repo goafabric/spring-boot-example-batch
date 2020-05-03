@@ -40,17 +40,15 @@ public class GenericJdbcItemWriter<T> extends JdbcBatchItemWriter<T> {
         this.setSql(sql);
         super.afterPropertiesSet();
 
-        doVersionhandling();
+        doVersionhandling(sql);
     }
 
-    private void doVersionhandling() {
+    private void doVersionhandling(String sql) {
         final String tableName = sql.split("INSERT INTO ")[1].split(" ")[0];
         Assert.notNull(tableName, "tablename should not be null");
         final int count = this.namedParameterJdbcTemplate.queryForObject(
                 "SELECT COUNT(*) FROM " + tableName + " WHERE catalog_version = :catalogVersion",
                 new MapSqlParameterSource().addValue("catalogVersion", catalogVersion), Integer.class);
-        if (count > 0) {
-            throw new IllegalStateException("Catalog already imported with version: " + catalogVersion);
-        }
+        Assert.isTrue(count > 0 , "Catalog already imported with version: " + catalogVersion);
     }
 }
