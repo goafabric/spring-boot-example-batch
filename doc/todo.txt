@@ -1,5 +1,6 @@
 Todo
 - schema
-- versionierung
 - monitoring der tabellen und errorhandling
 - docker
+- dateien von aussen
+- spring batch admin
