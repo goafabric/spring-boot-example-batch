@@ -32,7 +32,7 @@ public class ToyCatalogBatchConfiguration {
     @Bean
     public FlatFileItemReader<Person> toyCatalogReader() {
         return new GenericFileItemReader<>(ToyCatalog.class,
-                "sample-data.csv", new String[]{"toyName", "price"});
+                "toy-catalog.csv", new String[]{"toyName", "price"});
     }
 
     @Bean

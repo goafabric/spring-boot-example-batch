@@ -31,7 +31,7 @@ public class PersonCatalotBatchConfiguration {
     @Bean
     public FlatFileItemReader<Person> personReader() {
         return new GenericFileItemReader<>(Person.class,
-                "sample-data.csv", new String[]{"firstName", "lastName"});
+                "person-catalog.csv", new String[]{"firstName", "lastName"});
     }
 
     @Bean
