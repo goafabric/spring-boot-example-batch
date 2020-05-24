@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS people;
+CREATE SCHEMA catalogs;
 
-CREATE TABLE people  (
+CREATE TABLE catalogs.people  (
    	id varchar(36) not null
 		constraint pk_people
 			primary key,
@@ -10,7 +10,7 @@ CREATE TABLE people  (
     last_name VARCHAR(20)
 );
 
-CREATE TABLE toy_catalog (
+CREATE TABLE catalogs.toy_catalog (
    	id varchar(36) not null
 		constraint pk_toys
 			primary key,
