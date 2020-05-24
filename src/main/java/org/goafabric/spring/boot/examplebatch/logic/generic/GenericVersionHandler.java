@@ -1,23 +1,20 @@
-package org.goafabric.spring.boot.examplebatch.logic;
+package org.goafabric.spring.boot.examplebatch.logic.generic;
 
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.ReflectionUtils;
 
-import javax.sql.DataSource;
 import java.lang.reflect.Field;
 import java.util.UUID;
 
 @Component
 @StepScope
-public class VersionHandler {
+public class GenericVersionHandler {
     @Value("#{jobParameters[catalogVersion]}")
     private String catalogVersion;
 

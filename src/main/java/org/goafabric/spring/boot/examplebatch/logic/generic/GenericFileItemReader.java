@@ -1,9 +1,7 @@
-package org.goafabric.spring.boot.examplebatch.logic;
+package org.goafabric.spring.boot.examplebatch.logic.generic;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.batch.item.ParseException;
-import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;

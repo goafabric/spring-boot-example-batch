@@ -2,9 +2,9 @@ package org.goafabric.spring.boot.examplebatch.configuration;
 
 import org.goafabric.spring.boot.examplebatch.dto.Person;
 import org.goafabric.spring.boot.examplebatch.dto.ToyCatalog;
-import org.goafabric.spring.boot.examplebatch.logic.GenericFileItemReader;
-import org.goafabric.spring.boot.examplebatch.logic.GenericItemProcessor;
-import org.goafabric.spring.boot.examplebatch.logic.GenericJdbcItemWriter;
+import org.goafabric.spring.boot.examplebatch.logic.generic.GenericFileItemReader;
+import org.goafabric.spring.boot.examplebatch.logic.generic.GenericItemProcessor;
+import org.goafabric.spring.boot.examplebatch.logic.generic.GenericJdbcItemWriter;
 import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;

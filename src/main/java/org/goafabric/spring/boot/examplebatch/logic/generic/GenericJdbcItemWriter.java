@@ -1,4 +1,4 @@
-package org.goafabric.spring.boot.examplebatch.logic;
+package org.goafabric.spring.boot.examplebatch.logic.generic;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
@@ -14,7 +14,7 @@ public class GenericJdbcItemWriter<T> extends JdbcBatchItemWriter<T> {
     private DataSource dataSource;
 
     @Autowired
-    private VersionHandler versionHandler;
+    private GenericVersionHandler genericVersionHandler;
 
     private final String sql;
 
@@ -34,7 +34,7 @@ public class GenericJdbcItemWriter<T> extends JdbcBatchItemWriter<T> {
         this.setDataSource(dataSource);
         this.setSql(sql);
 
-        versionHandler.ensureCatalogVersion(sql);
+        genericVersionHandler.ensureCatalogVersion(sql);
         super.afterPropertiesSet();
     }
 }
