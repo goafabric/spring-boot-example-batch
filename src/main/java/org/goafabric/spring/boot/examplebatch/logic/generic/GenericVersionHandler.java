@@ -15,7 +15,7 @@ import java.util.UUID;
 @Component
 @StepScope
 public class GenericVersionHandler {
-    @Value("#{jobParameters[catalogVersion]}")
+    @Value("#{jobParameters[catalogVersion]}") //catalog version passed in via job params
     private String catalogVersion;
 
     @Autowired
