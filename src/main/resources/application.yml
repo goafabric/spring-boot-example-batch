@@ -16,3 +16,5 @@ spring:
   batch:
     job:
       enabled: false
+
+    initialize-schema: never
