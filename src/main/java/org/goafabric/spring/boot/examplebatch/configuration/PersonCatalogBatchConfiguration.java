@@ -14,8 +14,6 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.JdbcBatchItemWriter;
-import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,35 +27,35 @@ public class PersonCatalogBatchConfiguration {
     private StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public Job personJob(JobCompletionListener listener) {
+    public Job personCatalogJob(JobCompletionListener listener) {
         return jobBuilderFactory.get("personJob")
                 .incrementer(new RunIdIncrementer())
-                .listener(listener).flow(personStep()).end()
+                .listener(listener).flow(personCatalogStep()).end()
                 .build();
     }
 
     @Bean
-    public Step personStep() {
+    public Step personCatalogStep() {
         return stepBuilderFactory.get("personStep")
                 .<Person, Person> chunk(10)//defines how much data is written at a time
-                .reader(personReader()).processor(personProcessor()).writer(personWriter())
+                .reader(personCatalogReader()).processor(personCatalogProcessor()).writer(personCatalogWriter())
                 .build();
     }
 
     @Bean
-    public ItemReader<Person> personReader() {
+    public ItemReader<Person> personCatalogReader() {
         return new GenericCsvItemReader<>(Person.class,
                 "person-catalog.csv", new String[]{"firstName", "lastName"});
     }
 
     @Bean
     @StepScope //needed for JobParams
-    public ItemProcessor<Person , Person> personProcessor() {
+    public ItemProcessor<Person , Person> personCatalogProcessor() {
         return new GenericItemProcessor();
     }
 
     @Bean
-    public ItemWriter<Person> personWriter() {
+    public ItemWriter<Person> personCatalogWriter() {
         final String sql = "INSERT INTO catalogs.person_catalog (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
         return new GenericJdbcItemWriter<>(sql);
     }
