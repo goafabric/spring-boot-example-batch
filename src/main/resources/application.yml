@@ -17,4 +17,5 @@ spring:
     job:
       enabled: false
 
+    #disable creation of BATCH_JOB tables to let flyway do the work
     initialize-schema: never
