@@ -23,7 +23,11 @@ public class GenericJdbcItemWriter<T> extends JdbcBatchItemWriter<T> {
     }
 
     public void write(List<? extends T> items) throws Exception {
-        items.forEach(item -> log.info("Writing item: {}", item));
+        items.forEach(item -> {
+            genericJDBCVersionHandler.setId(item);
+            genericJDBCVersionHandler.setCatalogVersion(item);
+            log.info("Writing item: {}", item);
+        });
         super.write(items);
     }
 
