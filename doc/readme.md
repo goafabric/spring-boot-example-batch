@@ -1,7 +1,5 @@
 #Todo
-- schema
-- monitoring der tabellen und errorhandling
-- docker
+- schema für batch tabellen
 - dateien von aussen
 - spring batch admin
 
