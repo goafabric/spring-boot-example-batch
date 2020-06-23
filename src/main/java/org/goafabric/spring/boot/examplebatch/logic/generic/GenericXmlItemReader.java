@@ -12,10 +12,10 @@ public class GenericXmlItemReader<T> extends StaxEventItemReader<T> {
     private Map<String, Class> aliases;
     private String fileName;
 
-    public GenericXmlItemReader(String rootElementName, Map<String, Class> aliases, String fileName) {
+    public GenericXmlItemReader(String rootElementName, String fileName, Map<String, Class> aliases) {
         this.rootElementName = rootElementName;
-        this.aliases = aliases;
         this.fileName = fileName;
+        this.aliases = aliases;
     }
 
     @Override

@@ -1,10 +1,10 @@
 package org.goafabric.spring.boot.examplebatch.configuration;
 
 import org.goafabric.spring.boot.examplebatch.dto.Toy;
-import org.goafabric.spring.boot.examplebatch.logic.generic.GenericCsvItemReader;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericItemProcessor;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericJdbcItemWriter;
 import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
+import org.goafabric.spring.boot.examplebatch.logic.generic.GenericXmlItemReader;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -13,10 +13,11 @@ import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
-import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
 
 @Configuration
 public class ToyCatalogBatchConfiguration {
@@ -42,21 +43,24 @@ public class ToyCatalogBatchConfiguration {
                 .build();
     }
 
+    /*
     @Bean
     public FlatFileItemReader<Toy> toyCatalogReader() {
         return new GenericCsvItemReader<>(Toy.class,
                 "toy-catalog.csv", new String[]{"toyName", "price"});
     }
-
-    /*
-    @Bean
-    public FlatFileItemReader<Person> toyCatalogReader() {
-        return new GenericXmlItemReader<>("toy",
-                "toy-catalog.xml", null);
-                "toy-catalog.csv", new String[]{"toyName", "price"});
-    }
-
      */
+
+
+    @Bean
+    public GenericXmlItemReader<Toy> toyCatalogReader() {
+        return new GenericXmlItemReader<>("toy",
+                "toy-catalog.xml", new HashMap<String, Class>() {{
+                    put("toy", Toy.class);
+                    put("toyName", String.class);
+                    put("price", Double.class);
+                }});
+    }
 
     @Bean
     @StepScope //needed for JobParams
