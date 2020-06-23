@@ -1,21 +1,23 @@
 package org.goafabric.spring.boot.examplebatch.logic.generic;
 
+import org.goafabric.spring.boot.examplebatch.dto.Toy;
 import org.springframework.batch.item.xml.StaxEventItemReader;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class GenericXmlItemReader<T> extends StaxEventItemReader<T> {
 
-    private String rootElementName;
-    private Map<String, Class> aliases;
+    private final Class classType;
     private String fileName;
+    private String rootElementName;
 
-    public GenericXmlItemReader(String rootElementName, String fileName, Map<String, Class> aliases) {
-        this.rootElementName = rootElementName;
+    public GenericXmlItemReader(Class classType, String fileName, String rootElementName) {
+        this.classType = classType;
         this.fileName = fileName;
-        this.aliases = aliases;
+        this.rootElementName = rootElementName;
     }
 
     @Override
@@ -24,7 +26,9 @@ public class GenericXmlItemReader<T> extends StaxEventItemReader<T> {
         this.setFragmentRootElementName(rootElementName);
 
         final XStreamMarshaller marshaller = new XStreamMarshaller();
-        marshaller.setAliases(aliases);
+        marshaller.setAliases(new HashMap<String, Class>() {{
+            put(rootElementName, classType);
+        }});
         this.setUnmarshaller(marshaller);
 
         super.afterPropertiesSet();

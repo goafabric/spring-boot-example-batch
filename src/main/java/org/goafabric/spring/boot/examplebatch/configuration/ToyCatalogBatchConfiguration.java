@@ -1,5 +1,5 @@
-package org.goafabric.spring.boot.examplebatch.configuration;
 
+package org.goafabric.spring.boot.examplebatch.configuration;
 import org.goafabric.spring.boot.examplebatch.dto.Toy;
 import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericItemProcessor;
@@ -55,10 +55,8 @@ public class ToyCatalogBatchConfiguration {
 
     @Bean
     public ItemReader<Toy> toyCatalogReader() {
-        return new GenericXmlItemReader<>("toy",
-                "toy-catalog.xml", new HashMap<String, Class>() {{
-                    put("toy", Toy.class);
-                }});
+        return new GenericXmlItemReader<>(Toy.class,
+                    "toy-catalog.xml", "toy");
     }
 
     @Bean
