@@ -19,3 +19,4 @@ spring:
 
     #disable creation of BATCH_JOB tables to let flyway do the work
     initialize-schema: never
+    table-prefix: catalogs.BATCH_ #prefix that saves the batch tables to the same schema as the catalogs, we could also use a totally seperated schema like "BATCH"

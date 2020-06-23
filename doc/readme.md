@@ -1,5 +1,5 @@
 #Todo
-- schema für batch tabellen
+
 - spring batch admin
 - Integration in Spring Boot Service
 
@@ -10,6 +10,6 @@ https://docs.spring.io/spring-batch/docs/current/reference/html/readersAndWriter
 
 #SQLS
 
-select * from batch_job_execution
+select * from catalogs.batch_job_execution
 select * from catalogs.toy_catalog
 select * from catalogs.person_catalog
