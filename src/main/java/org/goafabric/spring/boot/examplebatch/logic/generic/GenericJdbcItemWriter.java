@@ -28,7 +28,6 @@ public class GenericJdbcItemWriter<T> extends JdbcBatchItemWriter<T> {
         this.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
         this.setDataSource(dataSource);
         this.setSql(sql);
-
         genericJDBCVersionHandler.ensureCatalogVersion(sql);
         super.afterPropertiesSet();
     }
