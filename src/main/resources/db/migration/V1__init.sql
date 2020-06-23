@@ -1,6 +1,6 @@
 CREATE SCHEMA catalogs;
 
-CREATE TABLE catalogs.people  (
+CREATE TABLE catalogs.person_catalog  (
    	id varchar(36) not null
 		constraint pk_people
 			primary key,

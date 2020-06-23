@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class PersonCatalotBatchConfiguration {
+public class PersonCatalogBatchConfiguration {
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
 
@@ -41,7 +41,7 @@ public class PersonCatalotBatchConfiguration {
     @Bean
     @StepScope
     public JdbcBatchItemWriter<Person> personWriter() {
-        final String sql = "INSERT INTO catalogs.people (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
+        final String sql = "INSERT INTO catalogs.person_catalog (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
         return new GenericJdbcItemWriter<>(sql);
     }
 
