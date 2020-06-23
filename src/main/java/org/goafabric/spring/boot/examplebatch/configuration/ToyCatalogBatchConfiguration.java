@@ -51,6 +51,7 @@ public class ToyCatalogBatchConfiguration {
     }
 
     @Bean
+    @StepScope //needed for JobParams
     public ItemProcessor<Person , Person> toyCatalogProcessor() {
         return new GenericItemProcessor();
     }

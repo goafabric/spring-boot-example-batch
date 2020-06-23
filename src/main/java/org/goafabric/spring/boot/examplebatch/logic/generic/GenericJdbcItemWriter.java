@@ -13,9 +13,6 @@ public class GenericJdbcItemWriter<T> extends JdbcBatchItemWriter<T> {
     @Autowired
     private DataSource dataSource;
 
-    @Autowired
-    private GenericJdbcVersionHandler genericJDBCVersionHandler;
-
     private final String sql;
 
     public GenericJdbcItemWriter(String sql) {
@@ -28,15 +25,11 @@ public class GenericJdbcItemWriter<T> extends JdbcBatchItemWriter<T> {
         this.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
         this.setDataSource(dataSource);
         this.setSql(sql);
-        genericJDBCVersionHandler.ensureCatalogVersion(sql);
         super.afterPropertiesSet();
     }
 
     public void write(List<? extends T> items) throws Exception {
-        items.forEach(item -> {
-            genericJDBCVersionHandler.setCatalogVersion(item);
-            log.info("Writing item: {}", item);
-        });
+        items.forEach(item -> log.info("Writing item: {}", item));
         super.write(items);
     }
 }

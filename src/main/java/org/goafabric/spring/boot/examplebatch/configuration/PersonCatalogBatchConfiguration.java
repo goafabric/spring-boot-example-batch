@@ -50,12 +50,12 @@ public class PersonCatalogBatchConfiguration {
     }
 
     @Bean
+    @StepScope //needed for JobParams
     public ItemProcessor<Person , Person> personProcessor() {
         return new GenericItemProcessor();
     }
 
     @Bean
-    @StepScope //needed for JobParams
     public JdbcBatchItemWriter<Person> personWriter() {
         final String sql = "INSERT INTO catalogs.person_catalog (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
         return new GenericJdbcItemWriter<>(sql);
