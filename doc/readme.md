@@ -1,7 +1,7 @@
 #Todo
 - schema für batch tabellen
-- dateien von aussen
 - spring batch admin
+- Integration in Spring Boot Service
 
 #Documentation
 https://docs.spring.io/spring-batch/docs/current/reference/html/index.html
