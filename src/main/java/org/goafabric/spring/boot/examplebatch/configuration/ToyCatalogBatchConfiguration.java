@@ -57,8 +57,6 @@ public class ToyCatalogBatchConfiguration {
         return new GenericXmlItemReader<>("toy",
                 "toy-catalog.xml", new HashMap<String, Class>() {{
                     put("toy", Toy.class);
-                    put("toyName", String.class);
-                    put("price", Double.class);
                 }});
     }
 
