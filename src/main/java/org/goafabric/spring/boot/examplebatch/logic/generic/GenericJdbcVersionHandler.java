@@ -14,19 +14,21 @@ import java.util.UUID;
 
 @Component
 @StepScope
-public class GenericVersionHandler {
+public class GenericJdbcVersionHandler {
     @Value("#{jobParameters[catalogVersion]}") //catalog version passed in via job params
     private String catalogVersion;
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
+    //set UUID via reflection
     public void setId(Object object) {
         final Field fieldId = ReflectionUtils.findField(object.getClass(), "id");
         fieldId.setAccessible(true);
         ReflectionUtils.setField(fieldId, object, UUID.randomUUID().toString());
     }
 
+    //set catlog version via reflection
     public void setCatalogVersion(Object object) {
         final Field fieldCatalogVersion = ReflectionUtils.findField(object.getClass(), "catalogVersion");
         fieldCatalogVersion.setAccessible(true);

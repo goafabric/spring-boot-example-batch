@@ -28,24 +28,6 @@ public class PersonCatalogBatchConfiguration {
     private StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public FlatFileItemReader<Person> personReader() {
-        return new GenericFileItemReader<>(Person.class,
-                "person-catalog.csv", new String[]{"firstName", "lastName"});
-    }
-
-    @Bean
-    public ItemProcessor<Person , Person> personProcessor() {
-        return new GenericItemProcessor();
-    }
-
-    @Bean
-    @StepScope
-    public JdbcBatchItemWriter<Person> personWriter() {
-        final String sql = "INSERT INTO catalogs.person_catalog (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
-        return new GenericJdbcItemWriter<>(sql);
-    }
-
-    @Bean
     public Job personJob(JobCompletionListener listener) {
         return jobBuilderFactory.get("personJob")
                 .incrementer(new RunIdIncrementer())
@@ -59,5 +41,23 @@ public class PersonCatalogBatchConfiguration {
                 .<Person, Person> chunk(10)//defines how much data is written at a time
                 .reader(personReader()).processor(personProcessor()).writer(personWriter())
                 .build();
+    }
+
+    @Bean
+    public FlatFileItemReader<Person> personReader() {
+        return new GenericFileItemReader<>(Person.class,
+                "person-catalog.csv", new String[]{"firstName", "lastName"});
+    }
+
+    @Bean
+    public ItemProcessor<Person , Person> personProcessor() {
+        return new GenericItemProcessor();
+    }
+
+    @Bean
+    @StepScope //needed for JobParams
+    public JdbcBatchItemWriter<Person> personWriter() {
+        final String sql = "INSERT INTO catalogs.person_catalog (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
+        return new GenericJdbcItemWriter<>(sql);
     }
 }

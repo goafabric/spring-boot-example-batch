@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Slf4j
 public class GenericItemProcessor<T> implements ItemProcessor<T , T> {
     @Autowired
-    private GenericVersionHandler genericVersionHandler;
+    private GenericJdbcVersionHandler genericJDBCVersionHandler;
 
     @Override
     public T process(T object) {
-        genericVersionHandler.setId(object);
-        genericVersionHandler.setCatalogVersion(object);
+        genericJDBCVersionHandler.setId(object);
+        genericJDBCVersionHandler.setCatalogVersion(object);
         return object;
     }
 }

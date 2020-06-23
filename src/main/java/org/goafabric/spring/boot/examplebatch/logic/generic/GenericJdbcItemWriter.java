@@ -14,7 +14,7 @@ public class GenericJdbcItemWriter<T> extends JdbcBatchItemWriter<T> {
     private DataSource dataSource;
 
     @Autowired
-    private GenericVersionHandler genericVersionHandler;
+    private GenericJdbcVersionHandler genericJDBCVersionHandler;
 
     private final String sql;
 
@@ -34,7 +34,7 @@ public class GenericJdbcItemWriter<T> extends JdbcBatchItemWriter<T> {
         this.setDataSource(dataSource);
         this.setSql(sql);
 
-        genericVersionHandler.ensureCatalogVersion(sql);
+        genericJDBCVersionHandler.ensureCatalogVersion(sql);
         super.afterPropertiesSet();
     }
 }

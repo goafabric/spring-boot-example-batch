@@ -29,24 +29,6 @@ public class ToyCatalogBatchConfiguration {
     private StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public FlatFileItemReader<Person> toyCatalogReader() {
-        return new GenericFileItemReader<>(ToyCatalog.class,
-                "toy-catalog.csv", new String[]{"toyName", "price"});
-    }
-
-    @Bean
-    public ItemProcessor<Person , Person> toyCatalogProcessor() {
-        return new GenericItemProcessor();
-    }
-
-    @Bean
-    @StepScope
-    public JdbcBatchItemWriter<Person> toyCatalogWriter() {
-        final String sql = "INSERT INTO catalogs.toy_catalog (id, catalog_version, toy_name, price) VALUES (:id, :catalogVersion, :toyName, :price)";
-        return new GenericJdbcItemWriter<>(sql);
-    }
-
-    @Bean
     public Job toyCatalogJob(JobCompletionListener listener) {
         return jobBuilderFactory.get("toyCatalogJob")
                 .incrementer(new RunIdIncrementer())
@@ -60,5 +42,23 @@ public class ToyCatalogBatchConfiguration {
                 .<Person, Person> chunk(10)//defines how much data is written at a time
                 .reader(toyCatalogReader()).processor(toyCatalogProcessor()).writer(toyCatalogWriter())
                 .build();
+    }
+
+    @Bean
+    public FlatFileItemReader<Person> toyCatalogReader() {
+        return new GenericFileItemReader<>(ToyCatalog.class,
+                "toy-catalog.csv", new String[]{"toyName", "price"});
+    }
+
+    @Bean
+    public ItemProcessor<Person , Person> toyCatalogProcessor() {
+        return new GenericItemProcessor();
+    }
+
+    @Bean
+    @StepScope //needed for JobParams
+    public JdbcBatchItemWriter<Person> toyCatalogWriter() {
+        final String sql = "INSERT INTO catalogs.toy_catalog (id, catalog_version, toy_name, price) VALUES (:id, :catalogVersion, :toyName, :price)";
+        return new GenericJdbcItemWriter<>(sql);
     }
 }
