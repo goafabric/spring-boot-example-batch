@@ -18,8 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-
 @Configuration
 public class ToyCatalogBatchConfiguration {
     @Autowired
@@ -56,7 +54,7 @@ public class ToyCatalogBatchConfiguration {
     @Bean
     public ItemReader<Toy> toyCatalogReader() {
         return new GenericXmlItemReader<>(Toy.class,
-                    "toy-catalog.xml", "toy");
+                "src/main/deploy/catalogdata/toy-catalog.xml", "toy");
     }
 
     @Bean

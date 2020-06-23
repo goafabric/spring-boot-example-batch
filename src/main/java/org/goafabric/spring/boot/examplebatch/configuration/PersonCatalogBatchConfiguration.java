@@ -45,7 +45,7 @@ public class PersonCatalogBatchConfiguration {
     @Bean
     public ItemReader<Person> personCatalogReader() {
         return new GenericCsvItemReader<>(Person.class,
-                "person-catalog.csv", new String[]{"firstName", "lastName"});
+                "src/main/deploy/catalogdata/person-catalog.csv", new String[]{"firstName", "lastName"});
     }
 
     @Bean
