@@ -1,7 +1,6 @@
 package org.goafabric.spring.boot.examplebatch.configuration;
 
-import org.goafabric.spring.boot.examplebatch.dto.Person;
-import org.goafabric.spring.boot.examplebatch.dto.ToyCatalog;
+import org.goafabric.spring.boot.examplebatch.dto.Toy;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericCsvItemReader;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericItemProcessor;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericJdbcItemWriter;
@@ -38,26 +37,36 @@ public class ToyCatalogBatchConfiguration {
     @Bean
     public Step toyCatalogStep() {
         return stepBuilderFactory.get("toyCatalogStep")
-                .<Person, Person> chunk(10)//defines how much data is written at a time
+                .<Toy, Toy> chunk(10)//defines how much data is written at a time
                 .reader(toyCatalogReader()).processor(toyCatalogProcessor()).writer(toyCatalogWriter())
                 .build();
     }
 
     @Bean
-    public FlatFileItemReader<Person> toyCatalogReader() {
-        return new GenericCsvItemReader<>(ToyCatalog.class,
+    public FlatFileItemReader<Toy> toyCatalogReader() {
+        return new GenericCsvItemReader<>(Toy.class,
                 "toy-catalog.csv", new String[]{"toyName", "price"});
     }
 
+    /*
+    @Bean
+    public FlatFileItemReader<Person> toyCatalogReader() {
+        return new GenericXmlItemReader<>("toy",
+                "toy-catalog.xml", null);
+                "toy-catalog.csv", new String[]{"toyName", "price"});
+    }
+
+     */
+
     @Bean
     @StepScope //needed for JobParams
-    public ItemProcessor<Person , Person> toyCatalogProcessor() {
+    public ItemProcessor<Toy, Toy> toyCatalogProcessor() {
         return new GenericItemProcessor();
     }
 
     @Bean
     @StepScope //needed for JobParams
-    public JdbcBatchItemWriter<Person> toyCatalogWriter() {
+    public JdbcBatchItemWriter<Toy> toyCatalogWriter() {
         final String sql = "INSERT INTO catalogs.toy_catalog (id, catalog_version, toy_name, price) VALUES (:id, :catalogVersion, :toyName, :price)";
         return new GenericJdbcItemWriter<>(sql);
     }

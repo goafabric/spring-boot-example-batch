@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ToyCatalog {
+public class Toy {
     private String id;
     private String catalogVersion;
 
