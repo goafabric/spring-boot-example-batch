@@ -1,3 +1,4 @@
+//uncomment if you want to avoid usage of batch_job tables
 /*
 package org.goafabric.spring.boot.examplebatch.configuration;
 
