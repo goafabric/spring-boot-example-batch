@@ -4,3 +4,12 @@ Todo
 - docker
 - dateien von aussen
 - spring batch admin
+
+
+SQLS:
+
+select * from batch_job_execution
+
+select * from catalogs.toy_catalog
+
+select * from catalogs.person_catalog
