@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class JobRunner implements CommandLineRunner {
     @Autowired
-    private JobStarter jobStarter;
+    private JobLauncherStarter jobLauncherStarter;
 
     @Override
     public void run(String... args) throws Exception {
-        jobStarter.start();
+        jobLauncherStarter.start();
     }
 }

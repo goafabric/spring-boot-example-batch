@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 @Component
-public class JobStarter {
+public class JobLauncherStarter {
     @Autowired
     private JobLauncher jobLauncher;
 
