@@ -1,9 +1,9 @@
 package org.goafabric.spring.boot.examplebatch.configuration;
 
 import org.goafabric.spring.boot.examplebatch.dto.Toy;
+import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericItemProcessor;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericJdbcItemWriter;
-import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericXmlItemReader;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -12,7 +12,8 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.database.JdbcBatchItemWriter;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,7 +46,7 @@ public class ToyCatalogBatchConfiguration {
 
     /*
     @Bean
-    public FlatFileItemReader<Toy> toyCatalogReader() {
+    public ItemReader<Toy> toyCatalogReader() {
         return new GenericCsvItemReader<>(Toy.class,
                 "toy-catalog.csv", new String[]{"toyName", "price"});
     }
@@ -53,7 +54,7 @@ public class ToyCatalogBatchConfiguration {
 
 
     @Bean
-    public GenericXmlItemReader<Toy> toyCatalogReader() {
+    public ItemReader<Toy> toyCatalogReader() {
         return new GenericXmlItemReader<>("toy",
                 "toy-catalog.xml", new HashMap<String, Class>() {{
                     put("toy", Toy.class);
@@ -68,7 +69,7 @@ public class ToyCatalogBatchConfiguration {
 
     @Bean
     @StepScope //needed for JobParams
-    public JdbcBatchItemWriter<Toy> toyCatalogWriter() {
+    public ItemWriter<Toy> toyCatalogWriter() {
         final String sql = "INSERT INTO catalogs.toy_catalog (id, catalog_version, toy_name, price) VALUES (:id, :catalogVersion, :toyName, :price)";
         return new GenericJdbcItemWriter<>(sql);
     }

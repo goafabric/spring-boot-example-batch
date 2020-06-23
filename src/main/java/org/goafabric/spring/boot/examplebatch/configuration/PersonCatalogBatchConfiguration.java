@@ -12,6 +12,8 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +45,7 @@ public class PersonCatalogBatchConfiguration {
     }
 
     @Bean
-    public FlatFileItemReader<Person> personReader() {
+    public ItemReader<Person> personReader() {
         return new GenericCsvItemReader<>(Person.class,
                 "person-catalog.csv", new String[]{"firstName", "lastName"});
     }
@@ -55,7 +57,7 @@ public class PersonCatalogBatchConfiguration {
     }
 
     @Bean
-    public JdbcBatchItemWriter<Person> personWriter() {
+    public ItemWriter<Person> personWriter() {
         final String sql = "INSERT INTO catalogs.person_catalog (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
         return new GenericJdbcItemWriter<>(sql);
     }
