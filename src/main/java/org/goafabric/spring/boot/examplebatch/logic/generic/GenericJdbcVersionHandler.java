@@ -21,13 +21,6 @@ public class GenericJdbcVersionHandler {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-    //set UUID via reflection
-    public void setId(Object object) {
-        final Field fieldId = ReflectionUtils.findField(object.getClass(), "id");
-        fieldId.setAccessible(true);
-        ReflectionUtils.setField(fieldId, object, UUID.randomUUID().toString());
-    }
-
     //set catlog version via reflection
     public void setCatalogVersion(Object object) {
         final Field fieldCatalogVersion = ReflectionUtils.findField(object.getClass(), "catalogVersion");
