@@ -2,13 +2,12 @@ package org.goafabric.spring.boot.examplebatch.configuration;
 
 import org.goafabric.spring.boot.examplebatch.dto.Person;
 import org.goafabric.spring.boot.examplebatch.dto.ToyCatalog;
-import org.goafabric.spring.boot.examplebatch.logic.generic.GenericFileItemReader;
+import org.goafabric.spring.boot.examplebatch.logic.generic.GenericCsvItemReader;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericItemProcessor;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericJdbcItemWriter;
 import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -46,7 +45,7 @@ public class ToyCatalogBatchConfiguration {
 
     @Bean
     public FlatFileItemReader<Person> toyCatalogReader() {
-        return new GenericFileItemReader<>(ToyCatalog.class,
+        return new GenericCsvItemReader<>(ToyCatalog.class,
                 "toy-catalog.csv", new String[]{"toyName", "price"});
     }
 

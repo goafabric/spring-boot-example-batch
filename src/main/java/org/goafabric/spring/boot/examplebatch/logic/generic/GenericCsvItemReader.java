@@ -9,12 +9,12 @@ import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.core.io.ClassPathResource;
 
 @Slf4j
-public class GenericFileItemReader<T> extends FlatFileItemReader<T> {
+public class GenericCsvItemReader<T> extends FlatFileItemReader<T> {
     final String fileName;
     final String[] fieldNames;
     final Class classType;
 
-    public GenericFileItemReader(Class classType, String fileName, String[] fieldNames) {
+    public GenericCsvItemReader(Class classType, String fileName, String[] fieldNames) {
         this.classType = classType;
         this.fileName = fileName;
         this.fieldNames = fieldNames;
