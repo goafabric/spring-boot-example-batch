@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 @Component
-public class JobStarter implements CommandLineRunner {
+public class JobStarter {
     @Autowired
     private JobLauncher jobLauncher;
 
@@ -26,15 +26,11 @@ public class JobStarter implements CommandLineRunner {
     @Autowired
     private Job toyCatalogJob;
 
-    @Override
-    public void run(String... args) throws Exception {
+    public void start() throws Exception {
         final JobParameters jobParameters = new JobParametersBuilder()
                 .addString("catalogVersion", "10").toJobParameters();
 
         jobLauncher.run(personJob, jobParameters);
-
-        //jobLauncher.run(personJob, new JobParametersBuilder().addString("catalogVersion", "10").addString("dummy", "dummy").toJobParameters());
-
         jobLauncher.run(toyCatalogJob, jobParameters);
     }
 }
