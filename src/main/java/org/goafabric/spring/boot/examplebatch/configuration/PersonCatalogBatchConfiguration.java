@@ -42,6 +42,9 @@ public class PersonCatalogBatchConfiguration {
                 .build();
     }
 
+    //Instead of using the Generic Wrapper classes, one could also use Spring builders directly: https://spring.io/guides/gs/batch-processing/
+    //Benefit of the Generic classes is, that they come in handy if multiple Catalogs will be imported in that way, as we have more generall code and less bloated Configuration Classes
+
     @Bean
     public ItemReader<Person> personCatalogReader() {
         return new GenericCsvItemReader<>(Person.class,
