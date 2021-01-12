@@ -1,5 +1,4 @@
 //uncomment if you want to avoid usage of batch_job tables
-/*
 package org.goafabric.spring.boot.examplebatch.configuration;
 
 import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
@@ -14,5 +13,4 @@ public class NoPersistenceBatchConfigurer extends DefaultBatchConfigurer {
     public void setDataSource(DataSource dataSource) {
     }
 }
-*/
 
