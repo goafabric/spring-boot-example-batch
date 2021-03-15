@@ -14,5 +14,5 @@ select * from catalogs.toy_catalog
 select * from catalogs.person_catalog
 
 #docker run
-docker run goafabric/spring-boot-examplebatch:1.0.0
-docker run goafabric/spring-boot-examplebatch-arm64v8:1.0.0
+docker run goafabric/spring-boot-examplebatch:1.0.1-SNAPSHOT
+docker run goafabric/spring-boot-examplebatch-arm64v8:1.0.1-SNAPSHOT
