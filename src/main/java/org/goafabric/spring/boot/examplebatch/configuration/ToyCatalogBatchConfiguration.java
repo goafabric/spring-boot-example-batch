@@ -1,10 +1,11 @@
 
 package org.goafabric.spring.boot.examplebatch.configuration;
+
 import org.goafabric.spring.boot.examplebatch.dto.Toy;
 import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
+import org.goafabric.spring.boot.examplebatch.logic.generic.GenericCsvItemReader;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericItemProcessor;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericJdbcItemWriter;
-import org.goafabric.spring.boot.examplebatch.logic.generic.GenericXmlItemReader;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -42,20 +43,19 @@ public class ToyCatalogBatchConfiguration {
                 .build();
     }
 
-    /*
     @Bean
     public ItemReader<Toy> toyCatalogReader() {
         return new GenericCsvItemReader<>(Toy.class,
-                "toy-catalog.csv", new String[]{"toyName", "price"});
+                "src/main/deploy/catalogdata/toy-catalog.csv", new String[]{"toyName", "price"});
     }
-     */
 
-
+    /*
     @Bean
     public ItemReader<Toy> toyCatalogReader() {
         return new GenericXmlItemReader<>(Toy.class,
                 "src/main/deploy/catalogdata/toy-catalog.xml", "toy");
     }
+     */
 
     @Bean
     @StepScope //needed for JobParams
