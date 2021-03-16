@@ -1,13 +1,11 @@
+/*
 package org.goafabric.spring.boot.examplebatch.logic.generic;
 
-import org.goafabric.spring.boot.examplebatch.dto.Toy;
 import org.springframework.batch.item.xml.StaxEventItemReader;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class GenericXmlItemReader<T> extends StaxEventItemReader<T> {
 
@@ -35,5 +33,6 @@ public class GenericXmlItemReader<T> extends StaxEventItemReader<T> {
         super.afterPropertiesSet();
     }
 
-
 }
+
+ */
