@@ -4,13 +4,13 @@ import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
 import org.goafabric.spring.boot.snapshot.domain.EpisodeIndex;
 import org.goafabric.spring.boot.snapshot.domain.Snapshot;
 import org.goafabric.spring.boot.snapshot.logic.EpisodeProcessor;
-import org.goafabric.spring.boot.snapshot.logic.EpisodeSnapshotReader;
 import org.goafabric.spring.boot.snapshot.logic.EpisodeWriter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 
@@ -33,7 +33,8 @@ public class EpisodeBatchConfiguration {
     public Step episodeStep() {
         return stepBuilderFactory.get("episodeStep")
                 .<Snapshot, EpisodeIndex> chunk(10)//defines how much data is written at a time
-                .reader(new EpisodeSnapshotReader())
+                .reader(new JdbcCursorItemReaderBuilder<Snapshot>()
+                        .sql("select referenceid from ais_snapshot where type = 'episode").build())
                 .processor(new EpisodeProcessor())
                 .writer(new EpisodeWriter())
                 .build();
