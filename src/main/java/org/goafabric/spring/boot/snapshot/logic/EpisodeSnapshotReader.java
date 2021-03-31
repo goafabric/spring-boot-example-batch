@@ -5,6 +5,7 @@ import org.springframework.batch.item.database.JdbcCursorItemReader;
 
 public class EpisodeSnapshotReader extends JdbcCursorItemReader<Snapshot> {
 
+    //could also be solved directly by a JdbcCursorItemReader inside Configuration class
     @Override
     public void afterPropertiesSet() {
         this.setSql("select referenceid from ais_snapshot where type = 'episode'");
