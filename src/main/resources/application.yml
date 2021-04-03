@@ -16,7 +16,7 @@ spring:
 
   flyway:
     locations: classpath:db/migration
-    schemas: catalog
+#    schemas: batch
 
   batch:
     job:
