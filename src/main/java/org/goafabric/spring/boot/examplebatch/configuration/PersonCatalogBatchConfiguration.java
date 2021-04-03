@@ -3,8 +3,6 @@ package org.goafabric.spring.boot.examplebatch.configuration;
 import org.goafabric.spring.boot.examplebatch.dto.Person;
 import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericItemProcessor;
-import org.goafabric.spring.boot.examplebatch.logic.generic.GenericCsvItemReader;
-import org.goafabric.spring.boot.examplebatch.logic.generic.GenericJdbcItemWriter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -14,11 +12,18 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
+import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
+import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.FileSystemResource;
 
-@Configuration
+import javax.sql.DataSource;
+
+@Configuration(proxyBeanMethods = false)
 public class PersonCatalogBatchConfiguration {
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
@@ -47,8 +52,20 @@ public class PersonCatalogBatchConfiguration {
 
     @Bean
     public ItemReader<Person> personCatalogReader() {
+        return new FlatFileItemReaderBuilder<Person>()
+                .name("personItemReader")
+                .resource(new FileSystemResource("src/main/deploy/catalogdata/person-catalog.csv"))
+                .delimited()
+                .names(new String[]{"id", "firstName", "lastName"})
+                .fieldSetMapper(new BeanWrapperFieldSetMapper<Person>() {{
+                    setTargetType(Person.class);
+                }})
+                .build();
+        /*
         return new GenericCsvItemReader<>(Person.class,
                 "src/main/deploy/catalogdata/person-catalog.csv", new String[]{"id", "firstName", "lastName"});
+                */
+
     }
 
     @Bean
@@ -57,9 +74,20 @@ public class PersonCatalogBatchConfiguration {
         return new GenericItemProcessor();
     }
 
+    @Autowired
+    private DataSource dataSource;
+
     @Bean
     public ItemWriter<Person> personCatalogWriter() {
         final String sql = "INSERT INTO catalogs.person_catalog (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
+        return new JdbcBatchItemWriterBuilder<Person>()
+                .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
+                .sql(sql)
+                .dataSource(dataSource)
+                .build();
+
+        /*
         return new GenericJdbcItemWriter<>(sql);
+        */
     }
 }
