@@ -46,7 +46,7 @@ public class ToyCatalogBatchConfiguration {
     @Bean
     public ItemReader<Toy> toyCatalogReader() {
         return new GenericCsvItemReader<>(Toy.class,
-                "src/main/deploy/catalogdata/toy-catalog.csv", new String[]{"toyName", "price"});
+                "src/main/deploy/catalogdata/toy-catalog.csv", new String[]{"id", "toyName", "price"});
     }
 
     /*

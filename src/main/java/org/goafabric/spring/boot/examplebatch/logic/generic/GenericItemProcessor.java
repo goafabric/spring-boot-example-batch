@@ -3,10 +3,6 @@ package org.goafabric.spring.boot.examplebatch.logic.generic;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.ReflectionUtils;
-
-import java.lang.reflect.Field;
-import java.util.UUID;
 
 @Slf4j
 public class GenericItemProcessor<T> implements ItemProcessor<T , T> {
@@ -15,14 +11,16 @@ public class GenericItemProcessor<T> implements ItemProcessor<T , T> {
 
     @Override
     public T process(T object) {
-        setField(object, "id", UUID.randomUUID().toString());
-        setField(object, "catalogVersion", catalogVersion);
+        //setField(object, "id", UUID.randomUUID().toString());
+        //setField(object, "catalogVersion", catalogVersion);
         return object;
     }
 
+    /*
     private void setField(Object object, String fieldName, String fieldValue) {
         final Field fieldId = ReflectionUtils.findField(object.getClass(), fieldName);
         fieldId.setAccessible(true);
         ReflectionUtils.setField(fieldId, object, fieldValue);
     }
+     */
 }
