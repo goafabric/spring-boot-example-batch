@@ -22,6 +22,8 @@ spring:
     initialize-schema: never
     table-prefix: catalogs.BATCH_ #prefix that saves the batch tables to the same schema as the catalogs, we could also use a totally seperated schema like "BATCH"
 
+    rate: 1000
+
 #log levels
 logging.level.root: "WARN"
 logging.level.org.goafabric: "INFO"

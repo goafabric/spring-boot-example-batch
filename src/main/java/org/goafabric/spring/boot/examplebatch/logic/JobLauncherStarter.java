@@ -5,6 +5,7 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,18 +19,15 @@ public class JobLauncherStarter {
     @Autowired
     private Job toyCatalogJob;
 
+    @Value("{spring.batch.rate}")
+    private String batchRate;
+
     public void start() throws Exception {
         final JobParameters jobParameters = new JobParametersBuilder()
                 .addString("catalogVersion", "10").toJobParameters();
 
         jobLauncher.run(personCatalogJob, jobParameters);
         jobLauncher.run(toyCatalogJob, jobParameters);
-
-        /*
-        while (true) {
-            jobLauncher.run(personCatalogJob, new JobParameters());
-            jobLauncher.run(toyCatalogJob, new JobParameters());
-        }
-         */
     }
+
 }
