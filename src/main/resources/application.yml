@@ -11,8 +11,12 @@ spring:
       connection-timeout: 10000 #timeout in ms
 
     #use standard spring database initialization instead of flyway
-    initialization-mode: always
-    schema: classpath*:db/migration/V1__init.sql
+#    initialization-mode: always
+#    schema: classpath*:db/migration/V1__init.sql
+
+  flyway:
+    locations: classpath:db/migration
+    schemas: catalog
 
   batch:
     job:
