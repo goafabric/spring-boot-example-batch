@@ -10,6 +10,9 @@ spring:
       maximum-pool-size: 10
       connection-timeout: 10000 #timeout in ms
 
+    initialization-mode: always
+    schema: classpath*:db/migration/V1__init.sql
+
   flyway:
     locations: classpath:db/migration
 
@@ -20,3 +23,13 @@ spring:
     #disable creation of BATCH_JOB tables to let flyway do the work
     initialize-schema: never
     table-prefix: catalogs.BATCH_ #prefix that saves the batch tables to the same schema as the catalogs, we could also use a totally seperated schema like "BATCH"
+
+#log levels
+logging.level.root: "WARN"
+logging.level.org.goafabric: "INFO"
+
+logging.level.org.springframework: "INFO"
+logging.level.org.flywaydb.core: "INFO"
+logging.level.org.hibernate.SQL: "INFO"
+
+#logging.pattern.console: "%white(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"

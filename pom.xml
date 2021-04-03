@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.goafabric</groupId>
         <artifactId>goa-parent</artifactId>
-        <version>2.4.3-SNAPSHOT</version>
+        <version>2.4.4-SNAPSHOT</version>
         <relativePath>parent-pom/pom.xml</relativePath>
     </parent>
 
@@ -53,10 +53,12 @@
             <artifactId>postgresql</artifactId>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
+        -->
 
         <!-- *** Test *** -->
 
@@ -79,123 +81,4 @@
 
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-    <profiles>
-        <profile>
-            <id>docker-image-amd64</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.google.cloud.tools</groupId>
-                        <artifactId>jib-maven-plugin</artifactId>
-                        <version>${jib-maven-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>docker-image-amd64</id>
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>build</goal>
-                                </goals>
-                                <configuration>
-                                    <from>
-                                        <image>adoptopenjdk/openjdk11-openj9:x86_64-debian-jre-11.0.9_11_openj9-0.23.0
-                                        </image>
-                                    </from>
-                                    <to>
-                                        <image>${docker.registry}/${project.artifactId}</image>
-                                        <tags>
-                                            <tag>${project.version}</tag>
-                                        </tags>
-                                    </to>
-                                    <extraDirectories>
-                                        <paths>
-                                            <path>
-                                                <from>src/main/deploy/catalogdata</from>
-                                                <into>/src/main/deploy/catalogdata</into>
-                                            </path>
-                                        </paths>
-                                    </extraDirectories>
-                                    <container>
-                                        <jvmFlags>
-                                            <jvmFlag>-Xms256m</jvmFlag>
-                                            <jvmFlag>-Xmx256m</jvmFlag>
-                                            <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
-                                        </jvmFlags>
-                                        <volumes>
-                                            <volume>/tmp</volume>
-                                        </volumes>
-                                    </container>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>docker-image-arm64v8</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.google.cloud.tools</groupId>
-                        <artifactId>jib-maven-plugin</artifactId>
-                        <version>${jib-maven-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>docker-image-arm64v8</id>
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>build</goal>
-                                </goals>
-                                <configuration>
-                                    <from>
-                                        <image>adoptopenjdk/openjdk11-openj9:aarch64-debian-jdk-11.0.9_11_openj9-0.23.0</image>
-                                    </from>
-                                    <to>
-                                        <image>${docker.registry}/${project.artifactId}-arm64v8</image>
-                                        <tags>
-                                            <tag>${project.version}</tag>
-                                        </tags>
-                                    </to>
-                                    <extraDirectories>
-                                        <paths>
-                                            <path>
-                                                <from>src/main/deploy/catalogdata</from>
-                                                <into>/src/main/deploy/catalogdata</into>
-                                            </path>
-                                        </paths>
-                                    </extraDirectories>
-                                    <container>
-                                        <jvmFlags>
-                                            <jvmFlag>-Xms256m</jvmFlag>
-                                            <jvmFlag>-Xmx256m</jvmFlag>
-                                            <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
-                                        </jvmFlags>
-                                        <volumes>
-                                            <volume>/tmp</volume>
-                                        </volumes>
-                                    </container>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>
