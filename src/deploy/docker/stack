@@ -1,0 +1,5 @@
+#!/bin/bash
+export STACK_NAME="batch-stack"
+export SERVICE_MEM="128m"
+[[ "$(uname -m)" == "arm64" || "$(uname -m)" == "aarch64" ]] && export ARCH_SUFFIX="-arm64v8"
+./stack_util ${STACK_NAME} $1
