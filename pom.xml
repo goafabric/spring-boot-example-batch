@@ -41,6 +41,12 @@
             <artifactId>postgresql</artifactId>
         </dependency>
 
+        <!-- native -->
+        <dependency>
+            <groupId>org.springframework.experimental</groupId>
+            <artifactId>spring-native</artifactId>
+        </dependency>
+
         <!-- *** Test *** -->
 
         <dependency>
