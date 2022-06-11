@@ -1,3 +1,5 @@
+#1.0.2
+
 #1.0.1
 - parent pom updated
 - xml toycatalog replaced by csv counterpart
