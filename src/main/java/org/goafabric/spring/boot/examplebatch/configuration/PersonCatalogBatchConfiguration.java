@@ -1,9 +1,10 @@
 package org.goafabric.spring.boot.examplebatch.configuration;
 
+import lombok.SneakyThrows;
 import org.goafabric.spring.boot.examplebatch.dto.Person;
 import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
-import org.goafabric.spring.boot.examplebatch.logic.generic.GenericItemProcessor;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericCsvItemReader;
+import org.goafabric.spring.boot.examplebatch.logic.generic.GenericItemProcessor;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericJdbcItemWriter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -17,7 +18,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.ClassPathResource;
 
 @Configuration
 public class PersonCatalogBatchConfiguration {
@@ -47,9 +48,10 @@ public class PersonCatalogBatchConfiguration {
     //Benefit of the Generic classes is, that they come in handy if multiple Catalogs will be imported in that way, as we have more generall code and less bloated Configuration Classes
 
     @Bean
+    @SneakyThrows
     public ItemReader<Person> personCatalogReader() {
         return new GenericCsvItemReader<>(Person.class,
-                new FileSystemResource("src/main/deploy/catalogdata/person-catalog.csv"), new String[]{"id", "firstName", "lastName"});
+                new ClassPathResource("catalogdata/person-catalog.csv"), new String[]{"id", "firstName", "lastName"});
     }
 
     @Bean

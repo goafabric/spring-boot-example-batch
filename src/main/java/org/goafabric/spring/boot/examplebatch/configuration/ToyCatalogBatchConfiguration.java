@@ -18,7 +18,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.ClassPathResource;
 
 @Configuration
 public class ToyCatalogBatchConfiguration {
@@ -47,7 +47,7 @@ public class ToyCatalogBatchConfiguration {
     @Bean
     public ItemReader<Toy> toyCatalogReader() {
         return new GenericCsvItemReader<>(Toy.class,
-                new FileSystemResource("src/main/deploy/catalogdata/toy-catalog.csv"), new String[]{"id", "toyName", "price"});
+                new ClassPathResource("catalogdata/toy-catalog.csv"), new String[]{"id", "toyName", "price"});
     }
 
     /*
