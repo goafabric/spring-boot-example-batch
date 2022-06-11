@@ -6,24 +6,23 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 
 @Slf4j
 public class GenericCsvItemReader<T> extends FlatFileItemReader<T> {
-    final String fileName;
+    final Resource resource;
     final String[] fieldNames;
     final Class classType;
 
-    public GenericCsvItemReader(Class classType, String fileName, String[] fieldNames) {
+    public GenericCsvItemReader(Class classType, Resource resource, String[] fieldNames) {
         this.classType = classType;
-        this.fileName = fileName;
+        this.resource = resource;
         this.fieldNames = fieldNames;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        this.setResource(new FileSystemResource(fileName));
+        this.setResource(resource);
         this.setLineMapper(createLineMapper());
         super.afterPropertiesSet();
     }
