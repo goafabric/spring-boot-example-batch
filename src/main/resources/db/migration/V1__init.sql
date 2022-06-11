@@ -1,4 +1,7 @@
 -- separate schema
+DROP SCHEMA if exists catalogs CASCADE;
+DROP SCHEMA if exists batch CASCADE;
+
 CREATE SCHEMA catalogs;
 
 CREATE SCHEMA batch;
