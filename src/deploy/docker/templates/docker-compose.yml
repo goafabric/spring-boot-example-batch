@@ -2,7 +2,7 @@ version: '3.1'
 services:
   spring-batch:
     container_name: spring-batch
-    image: ${_Values_image_repository}:${_Values_image_tag}
+    image: ${_Values_image_repository}${_Values_image_native}:${_Values_image_tag}
     environment:
       - TZ=Europe/Berlin
       - spring.datasource.url=jdbc:postgresql://batch-postgres:5432/customer
