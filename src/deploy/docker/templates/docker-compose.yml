@@ -2,14 +2,14 @@ version: '3.1'
 services:
   spring-batch:
     container_name: spring-batch
-    image: goafabric/spring-boot-examplebatch${ARCH_SUFFIX}:1.0.1-SNAPSHOT
+    image: ${_Values_image_repository}:${_Values_image_tag}
     environment:
       - TZ=Europe/Berlin
       - spring.datasource.url=jdbc:postgresql://batch-postgres:5432/customer
       - spring.datasource.username=example-batch
       - spring.datasource.password=example-batch
       - spring.batch.rate=500
-    entrypoint: ["java","-Xms${SERVICE_MEM}","-Xmx${SERVICE_MEM}",
+    entrypoint: ["java","-Xms${_Values_resources_requests_memory}","-Xmx${_Values_resources_requests_memory}",
                  "-Djava.security.egd=file:/dev/./urandom","-cp","/app/resources:/app/classes:/app/libs/*",
                  "org.goafabric.spring.boot.examplebatch.Application"]
 
