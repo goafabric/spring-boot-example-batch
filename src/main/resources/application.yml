@@ -10,14 +10,6 @@ spring:
       maximum-pool-size: 10
       connection-timeout: 10000 #timeout in ms
 
-    #use standard spring database initialization instead of flyway
-#    initialization-mode: always
-#    schema: classpath*:db/migration/V1__init.sql
-
-  flyway:
-    locations: classpath:db/migration
-#    schemas: batch
-
   batch:
     job:
       enabled: false
@@ -27,6 +19,10 @@ spring:
     table-prefix: batch.BATCH_ #prefix that saves the batch tables to the same schema as the catalogs, we could also use a totally seperated schema like "BATCH"
 
     rate: 500
+
+spring.sql.init.mode: always
+spring.sql.init.schema-locations: classpath*:db/migration/V1__init.sql
+spring.jpa.hibernate.ddl-auto: none
 
 #log levels
 logging.level.root: "WARN"
