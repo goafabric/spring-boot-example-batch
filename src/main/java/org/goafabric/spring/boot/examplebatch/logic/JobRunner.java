@@ -15,8 +15,6 @@ public class JobRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (batchRate.equals("-1")) {
-            jobLauncherStarter.start();
-        }
+        jobLauncherStarter.start();
     }
 }
