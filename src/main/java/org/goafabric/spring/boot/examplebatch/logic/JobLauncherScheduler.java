@@ -1,3 +1,4 @@
+/*
 package org.goafabric.spring.boot.examplebatch.logic;
 
 import org.springframework.batch.core.Job;
@@ -24,6 +25,6 @@ public class JobLauncherScheduler {
     public void schedule() throws Exception {
         jobLauncher.run(personCatalogJob, new JobParameters());
         jobLauncher.run(toyCatalogJob, new JobParameters());
-
     }
 }
+*/
