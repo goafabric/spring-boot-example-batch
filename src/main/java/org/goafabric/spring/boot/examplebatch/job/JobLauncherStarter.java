@@ -1,5 +1,6 @@
 package org.goafabric.spring.boot.examplebatch.job;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
@@ -10,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class JobLauncherStarter implements CommandLineRunner {
     @Autowired
     private JobLauncher jobLauncher;
@@ -27,6 +29,7 @@ public class JobLauncherStarter implements CommandLineRunner {
     public void run(String... args) throws Exception {
         if (batchRate.equals("-1")) {
             start();
+            log.info("launched manually and wait 5 seconds");
             Thread.currentThread().join(5000);
         }
     }
