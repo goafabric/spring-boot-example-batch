@@ -378,10 +378,12 @@
                                                 <groupId>org.projectlombok</groupId>
                                                 <artifactId>lombok</artifactId>
                                             </exclude>
+                                            <!--
                                             <exclude>
                                                 <groupId>com.h2database</groupId>
                                                 <artifactId>h2</artifactId>
                                             </exclude>
+                                            -->
                                         </excludes>
                                         <image>
                                             <name>${docker.registry}/${project.artifactId}-native:${project.version}
@@ -427,7 +429,6 @@
                             <artifactId>exec-maven-plugin</artifactId>
                             <version>${exec-maven-plugin.version}</version>
                             <executions>
-                                <!--
                                 <execution>
                                     <id>integrity</id>
                                     <phase>deploy</phase>
@@ -444,7 +445,6 @@
                                         </arguments>
                                     </configuration>
                                 </execution>
-                                -->
                                 <execution>
                                     <id>docker push</id>
                                     <phase>deploy</phase>
