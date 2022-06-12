@@ -1,4 +1,3 @@
-
 package org.goafabric.spring.boot.examplebatch.toy;
 
 import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
@@ -14,13 +13,14 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
 import javax.sql.DataSource;
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class ToyConfiguration {
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
@@ -29,18 +29,22 @@ public class ToyConfiguration {
     private StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public Job toyCatalogJob(JobCompletionListener listener) {
+    public Job toyCatalogJob(@Qualifier("toyCatalogStep") Step toyCatalogStep, JobCompletionListener listener) {
         return jobBuilderFactory.get("toyCatalogJob")
                 .incrementer(new RunIdIncrementer())
-                .listener(listener).flow(toyCatalogStep()).end()
+                .listener(listener).flow(toyCatalogStep).end()
                 .build();
     }
 
-    @Bean
-    public Step toyCatalogStep() {
-        return stepBuilderFactory.get("toyCatalogStep")
-                .<Toy, Toy> chunk(10)//defines how much data is written at a time
-                .reader(toyItemReader()).processor(toyItemProcessor()).writer(toyItemWriter())
+    @Bean(name = "toyCatalogStep")
+    public Step toyCatalogStep(ItemReader<Toy> toyItemReader,
+                           ItemProcessor<Toy, Toy> toyItemProcessor,
+                           ItemWriter<Toy> toyItemWriter) {
+        return this.stepBuilderFactory.get("toyStep")
+                .<Toy, Toy>chunk(2)
+                .reader(toyItemReader)
+                .processor(toyItemProcessor)
+                .writer(toyItemWriter)
                 .build();
     }
 
@@ -58,16 +62,13 @@ public class ToyConfiguration {
     }
 
     @Bean
-    @StepScope //needed for JobParams
+    @StepScope
     public ItemProcessor<Toy, Toy> toyItemProcessor() {
         return new ToyItemProcessor();
     }
 
-    @Autowired
-    private DataSource dataSource;
     @Bean
-    @StepScope //needed for JobParams
-    public ItemWriter<Toy> toyItemWriter() {
+    public ItemWriter<Toy> toyItemWriter(DataSource dataSource) {
         final String sql = "INSERT INTO catalogs.toy_catalog (id, catalog_version, toy_name, price) VALUES (:id, :catalogVersion, :toyName, :price)";
         return new ToyItemWriter(dataSource, sql);
     }

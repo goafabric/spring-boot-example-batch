@@ -1,5 +1,22 @@
 package org.goafabric.spring.boot.examplebatch.person;
 
+/*
+ * Copyright 2021-2021 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
 import lombok.SneakyThrows;
 import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
 import org.springframework.batch.core.Job;
@@ -11,17 +28,23 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
 import javax.sql.DataSource;
 
-@Configuration
+/**
+ * @author Michael Minella
+ */
+@Configuration(proxyBeanMethods = false) //needed for spring-native
 public class PersonConfiguration {
+
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
 
@@ -29,23 +52,25 @@ public class PersonConfiguration {
     private StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public Job personCatalogJob(JobCompletionListener listener) {
+    public Job personJob(@Qualifier("personStep") Step personStep, JobCompletionListener listener) {
         return jobBuilderFactory.get("personJob")
                 .incrementer(new RunIdIncrementer())
-                .listener(listener).flow(personStep()).end()
+                .listener(listener).flow(personStep).end()
                 .build();
     }
 
-    @Bean
-    public Step personStep() {
-        return stepBuilderFactory.get("personStep")
-                .<Person, Person> chunk(10)//defines how much data is written at a time
-                .reader(personItemReader()).processor(personItemProcessor()).writer(personItemWriter())
+    @Bean(name = "personStep") //name needed for spring-native with Qualifier above + Injection of Reader / Writer .. only works like this, not via bean method call
+    public Step personStep(ItemReader<Person> personItemReader,
+                            ItemProcessor<Person, Person> personItemProcessor,
+                            ItemWriter<Person> personItemWriter) {
+        return this.stepBuilderFactory.get("personStep")
+                .<Person, Person>chunk(2)
+                .reader(personItemReader)
+                .processor(personItemProcessor)
+                .writer(personItemWriter)
                 .build();
     }
 
-    //Instead of using the Generic Wrapper classes, one could also use Spring builders directly: https://spring.io/guides/gs/batch-processing/
-    //Benefit of the Generic classes is, that they come in handy if multiple Catalogs will be imported in that way, as we have more generall code and less bloated Configuration Classes
 
     @Bean
     @SneakyThrows
@@ -62,17 +87,14 @@ public class PersonConfiguration {
     }
 
     @Bean
-    @StepScope //needed for JobParams
-    public ItemProcessor<Person , Person> personItemProcessor() {
+    @StepScope
+    public ItemProcessor<Person, Person> personItemProcessor() {
         return new PersonItemProcessor();
     }
 
-    @Autowired
-    private DataSource dataSource;
-
     @Bean
-    public ItemWriter<Person> personItemWriter() {
-        final String sql = "INSERT INTO catalogs.person_catalog (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
-        return new PersonItemWriter(dataSource, sql);
+    public JdbcBatchItemWriter<Person> personItemWriter(DataSource dataSource) {
+        return new PersonItemWriter(dataSource, "INSERT INTO PERSON VALUES (:id, :firstName, :lastName)");
     }
+
 }

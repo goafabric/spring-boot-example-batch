@@ -17,7 +17,7 @@ public class JobLauncherStarter implements CommandLineRunner {
     private JobLauncher jobLauncher;
 
     @Autowired
-    private Job personCatalogJob;
+    private Job personJob;
 
     @Autowired
     private Job toyCatalogJob;
@@ -38,8 +38,9 @@ public class JobLauncherStarter implements CommandLineRunner {
         final JobParameters jobParameters = new JobParametersBuilder()
                 .addString("catalogVersion", "10").toJobParameters();
 
-        jobLauncher.run(personCatalogJob, jobParameters);
+        jobLauncher.run(personJob, jobParameters);
         jobLauncher.run(toyCatalogJob, jobParameters);
     }
 
 }
+

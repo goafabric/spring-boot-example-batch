@@ -1,4 +1,4 @@
-/*
+package org.goafabric.spring.boot.examplebatch.job;/*
 package org.goafabric.spring.boot.examplebatch.logic;
 
 import org.springframework.batch.core.Job;
