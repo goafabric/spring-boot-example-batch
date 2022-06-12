@@ -1,10 +1,8 @@
-package org.goafabric.spring.boot.examplebatch.configuration;
+package org.goafabric.spring.boot.examplebatch.person;
 
 import lombok.SneakyThrows;
 import org.goafabric.spring.boot.examplebatch.dto.Person;
 import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
-import org.goafabric.spring.boot.examplebatch.logic.generic.GenericItemProcessor;
-import org.goafabric.spring.boot.examplebatch.logic.generic.GenericJdbcItemWriter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -22,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
 @Configuration
-public class PersonCatalogBatchConfiguration {
+public class PersonConfiguration {
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
 
@@ -65,12 +63,12 @@ public class PersonCatalogBatchConfiguration {
     @Bean
     @StepScope //needed for JobParams
     public ItemProcessor<Person , Person> personCatalogProcessor() {
-        return new GenericItemProcessor();
+        return new PersonItemProcessor();
     }
 
     @Bean
     public ItemWriter<Person> personCatalogWriter() {
         final String sql = "INSERT INTO catalogs.person_catalog (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
-        return new GenericJdbcItemWriter<>(sql);
+        return new PersonItemWriter(sql);
     }
 }
