@@ -4,19 +4,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.goafabric.spring.boot.examplebatch.dto.Person;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
 import java.util.List;
 
 @Slf4j
 public class PersonItemWriter extends JdbcBatchItemWriter<Person> {
-    @Autowired
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     private final String sql;
 
-    public PersonItemWriter(String sql) {
+    public PersonItemWriter(DataSource dataSource, String sql) {
+        this.dataSource = dataSource;
         this.sql = sql;
     }
 

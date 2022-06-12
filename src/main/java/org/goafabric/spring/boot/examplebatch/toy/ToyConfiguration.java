@@ -3,8 +3,6 @@ package org.goafabric.spring.boot.examplebatch.toy;
 
 import org.goafabric.spring.boot.examplebatch.dto.Toy;
 import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
-import org.goafabric.spring.boot.examplebatch.logic.generic.GenericItemProcessor;
-import org.goafabric.spring.boot.examplebatch.logic.generic.GenericJdbcItemWriter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -20,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class ToyConfiguration {
@@ -61,13 +61,15 @@ public class ToyConfiguration {
     @Bean
     @StepScope //needed for JobParams
     public ItemProcessor<Toy, Toy> toyCatalogProcessor() {
-        return new GenericItemProcessor();
+        return new ToyItemProcessor();
     }
 
+    @Autowired
+    private DataSource dataSource;
     @Bean
     @StepScope //needed for JobParams
     public ItemWriter<Toy> toyCatalogWriter() {
         final String sql = "INSERT INTO catalogs.toy_catalog (id, catalog_version, toy_name, price) VALUES (:id, :catalogVersion, :toyName, :price)";
-        return new GenericJdbcItemWriter<>(sql);
+        return new ToyItemWriter(dataSource, sql);
     }
 }

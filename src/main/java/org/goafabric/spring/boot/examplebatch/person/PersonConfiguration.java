@@ -19,6 +19,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
+import javax.sql.DataSource;
+
 @Configuration
 public class PersonConfiguration {
     @Autowired
@@ -66,9 +68,12 @@ public class PersonConfiguration {
         return new PersonItemProcessor();
     }
 
+    @Autowired
+    private DataSource dataSource;
+
     @Bean
     public ItemWriter<Person> personCatalogWriter() {
         final String sql = "INSERT INTO catalogs.person_catalog (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
-        return new PersonItemWriter(sql);
+        return new PersonItemWriter(dataSource, sql);
     }
 }
