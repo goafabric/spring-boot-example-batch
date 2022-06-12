@@ -1,5 +1,5 @@
 
-package org.goafabric.spring.boot.examplebatch.configuration;
+package org.goafabric.spring.boot.examplebatch.toy;
 
 import org.goafabric.spring.boot.examplebatch.dto.Toy;
 import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
 @Configuration
-public class ToyCatalogBatchConfiguration {
+public class ToyConfiguration {
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
 
