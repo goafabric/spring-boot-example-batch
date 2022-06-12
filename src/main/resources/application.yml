@@ -18,7 +18,7 @@ spring:
       initialize-schema: never
       table-prefix: batch.BATCH_ #prefix that saves the batch tables to the same schema as the catalogs, we could also use a totally seperated schema like "BATCH"
 
-#    rate: 500
+    rate: -1 #500
 
 spring.sql.init.mode: always
 spring.sql.init.schema-locations: classpath*:db/migration/V1__init.sql

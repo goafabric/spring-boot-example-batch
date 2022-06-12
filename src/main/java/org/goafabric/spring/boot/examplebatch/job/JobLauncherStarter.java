@@ -27,7 +27,7 @@ public class JobLauncherStarter implements CommandLineRunner {
     public void run(String... args) throws Exception {
         if (batchRate.equals("-1")) {
             start();
-            //Thread.currentThread().join(1000);
+            Thread.currentThread().join(5000);
         }
     }
 
