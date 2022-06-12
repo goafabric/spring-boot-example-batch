@@ -12,7 +12,11 @@ public class PersonItemProcessor implements ItemProcessor<Person, Person> {
 
     @Override
     public Person process(Person person) {
-        return person;
+        return Person.builder()
+                .id(person.getId())
+                .firstName(person.getFirstName().toLowerCase())
+                .lastName(person.getLastName().toLowerCase())
+                .build();
     }
 
 }
