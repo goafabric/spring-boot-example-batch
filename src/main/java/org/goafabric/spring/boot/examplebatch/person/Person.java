@@ -1,4 +1,4 @@
-package org.goafabric.spring.boot.examplebatch.dto;
+package org.goafabric.spring.boot.examplebatch.person;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Toy {
+public class Person {
     private String id;
     private String catalogVersion;
 
-    private String toyName;
-    private String price;
-
+    private String lastName;
+    private String firstName;
 }

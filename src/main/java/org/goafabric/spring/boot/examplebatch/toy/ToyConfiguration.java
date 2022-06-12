@@ -1,8 +1,7 @@
 
 package org.goafabric.spring.boot.examplebatch.toy;
 
-import org.goafabric.spring.boot.examplebatch.dto.Toy;
-import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
+import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
