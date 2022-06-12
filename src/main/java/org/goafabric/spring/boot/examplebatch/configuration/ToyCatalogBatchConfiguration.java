@@ -3,7 +3,6 @@ package org.goafabric.spring.boot.examplebatch.configuration;
 
 import org.goafabric.spring.boot.examplebatch.dto.Toy;
 import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
-import org.goafabric.spring.boot.examplebatch.logic.generic.GenericCsvItemReader;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericItemProcessor;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericJdbcItemWriter;
 import org.springframework.batch.core.Job;
@@ -15,6 +14,8 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,17 +47,16 @@ public class ToyCatalogBatchConfiguration {
 
     @Bean
     public ItemReader<Toy> toyCatalogReader() {
-        return new GenericCsvItemReader<>(Toy.class,
-                new ClassPathResource("catalogdata/toy-catalog.csv"), new String[]{"id", "toyName", "price"});
+        return new FlatFileItemReaderBuilder<Toy>()
+                .name("toyItemReader")
+                .resource(new ClassPathResource("catalogdata/toy-catalog.csv"))
+                .delimited()
+                .names(new String[]{"id", "toyName", "price"})
+                .fieldSetMapper(new BeanWrapperFieldSetMapper<Toy>() {{
+                    setTargetType(Toy.class);
+                }}).build();
+        //return new GenericCsvItemReader<>(Toy.class, new ClassPathResource("catalogdata/toy-catalog.csv"), new String[]{"id", "toyName", "price"});
     }
-
-    /*
-    @Bean
-    public ItemReader<Toy> toyCatalogReader() {
-        return new GenericXmlItemReader<>(Toy.class,
-                "src/main/deploy/catalogdata/toy-catalog.xml", "toy");
-    }
-     */
 
     @Bean
     @StepScope //needed for JobParams

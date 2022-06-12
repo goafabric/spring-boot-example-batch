@@ -3,7 +3,6 @@ package org.goafabric.spring.boot.examplebatch.configuration;
 import lombok.SneakyThrows;
 import org.goafabric.spring.boot.examplebatch.dto.Person;
 import org.goafabric.spring.boot.examplebatch.logic.JobCompletionListener;
-import org.goafabric.spring.boot.examplebatch.logic.generic.GenericCsvItemReader;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericItemProcessor;
 import org.goafabric.spring.boot.examplebatch.logic.generic.GenericJdbcItemWriter;
 import org.springframework.batch.core.Job;
@@ -15,6 +14,8 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,8 +51,15 @@ public class PersonCatalogBatchConfiguration {
     @Bean
     @SneakyThrows
     public ItemReader<Person> personCatalogReader() {
-        return new GenericCsvItemReader<>(Person.class,
-                new ClassPathResource("catalogdata/person-catalog.csv"), new String[]{"id", "firstName", "lastName"});
+        return new FlatFileItemReaderBuilder<Person>()
+                .name("personItemReader")
+                .resource(new ClassPathResource("catalogdata/person-catalog.csv"))
+                .delimited()
+                .names(new String[]{"id", "firstName", "lastName"})
+                .fieldSetMapper(new BeanWrapperFieldSetMapper<>() {{
+                    setTargetType(Person.class);
+                }}).build();
+        //return new GenericCsvItemReader<>(Person.class, new ClassPathResource("catalogdata/person-catalog.csv"), new String[]{"id", "firstName", "lastName"});
     }
 
     @Bean
