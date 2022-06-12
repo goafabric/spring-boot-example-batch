@@ -52,8 +52,8 @@ public class PersonConfiguration {
     private StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public Job personJob(@Qualifier("personStep") Step personStep, JobCompletionListener listener) {
-        return jobBuilderFactory.get("personJob")
+    public Job personCatalogJob(@Qualifier("personStep") Step personStep, JobCompletionListener listener) {
+        return jobBuilderFactory.get("personCatalogJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(listener).flow(personStep).end()
                 .build();
@@ -94,7 +94,8 @@ public class PersonConfiguration {
 
     @Bean
     public JdbcBatchItemWriter<Person> personItemWriter(DataSource dataSource) {
-        return new PersonItemWriter(dataSource, "INSERT INTO PERSON VALUES (:id, :firstName, :lastName)");
+        final String sql = "INSERT INTO catalogs.person_catalog (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
+        return new PersonItemWriter(dataSource, sql);
     }
 
 }
