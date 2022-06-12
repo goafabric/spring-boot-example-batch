@@ -40,12 +40,12 @@ public class ToyConfiguration {
     public Step toyCatalogStep() {
         return stepBuilderFactory.get("toyCatalogStep")
                 .<Toy, Toy> chunk(10)//defines how much data is written at a time
-                .reader(toyCatalogReader()).processor(toyCatalogProcessor()).writer(toyCatalogWriter())
+                .reader(toyItemReader()).processor(toyItemProcessor()).writer(toyItemWriter())
                 .build();
     }
 
     @Bean
-    public ItemReader<Toy> toyCatalogReader() {
+    public ItemReader<Toy> toyItemReader() {
         return new FlatFileItemReaderBuilder<Toy>()
                 .name("toyItemReader")
                 .resource(new ClassPathResource("catalogdata/toy-catalog.csv"))
@@ -59,7 +59,7 @@ public class ToyConfiguration {
 
     @Bean
     @StepScope //needed for JobParams
-    public ItemProcessor<Toy, Toy> toyCatalogProcessor() {
+    public ItemProcessor<Toy, Toy> toyItemProcessor() {
         return new ToyItemProcessor();
     }
 
@@ -67,7 +67,7 @@ public class ToyConfiguration {
     private DataSource dataSource;
     @Bean
     @StepScope //needed for JobParams
-    public ItemWriter<Toy> toyCatalogWriter() {
+    public ItemWriter<Toy> toyItemWriter() {
         final String sql = "INSERT INTO catalogs.toy_catalog (id, catalog_version, toy_name, price) VALUES (:id, :catalogVersion, :toyName, :price)";
         return new ToyItemWriter(dataSource, sql);
     }

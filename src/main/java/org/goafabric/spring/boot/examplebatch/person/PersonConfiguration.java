@@ -32,15 +32,15 @@ public class PersonConfiguration {
     public Job personCatalogJob(JobCompletionListener listener) {
         return jobBuilderFactory.get("personJob")
                 .incrementer(new RunIdIncrementer())
-                .listener(listener).flow(personCatalogStep()).end()
+                .listener(listener).flow(personStep()).end()
                 .build();
     }
 
     @Bean
-    public Step personCatalogStep() {
+    public Step personStep() {
         return stepBuilderFactory.get("personStep")
                 .<Person, Person> chunk(10)//defines how much data is written at a time
-                .reader(personCatalogReader()).processor(personCatalogProcessor()).writer(personCatalogWriter())
+                .reader(personItemReader()).processor(personItemProcessor()).writer(personItemWriter())
                 .build();
     }
 
@@ -49,7 +49,7 @@ public class PersonConfiguration {
 
     @Bean
     @SneakyThrows
-    public ItemReader<Person> personCatalogReader() {
+    public ItemReader<Person> personItemReader() {
         return new FlatFileItemReaderBuilder<Person>()
                 .name("personItemReader")
                 .resource(new ClassPathResource("catalogdata/person-catalog.csv"))
@@ -63,7 +63,7 @@ public class PersonConfiguration {
 
     @Bean
     @StepScope //needed for JobParams
-    public ItemProcessor<Person , Person> personCatalogProcessor() {
+    public ItemProcessor<Person , Person> personItemProcessor() {
         return new PersonItemProcessor();
     }
 
@@ -71,7 +71,7 @@ public class PersonConfiguration {
     private DataSource dataSource;
 
     @Bean
-    public ItemWriter<Person> personCatalogWriter() {
+    public ItemWriter<Person> personItemWriter() {
         final String sql = "INSERT INTO catalogs.person_catalog (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
         return new PersonItemWriter(dataSource, sql);
     }
