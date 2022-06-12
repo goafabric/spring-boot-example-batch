@@ -3,8 +3,20 @@ DROP SCHEMA if exists catalogs CASCADE;
 DROP SCHEMA if exists batch CASCADE;
 
 CREATE SCHEMA catalogs;
-
 CREATE SCHEMA batch;
+
+-- person
+
+drop table if exists PERSON;
+
+CREATE TABLE PERSON  (
+	id varchar(36) not null
+		constraint pk_people
+			primary key,
+    firstName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL
+);
+
 
 -- catalog tables
 CREATE TABLE catalogs.person_catalog  (
