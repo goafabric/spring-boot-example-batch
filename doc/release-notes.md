@@ -1,4 +1,6 @@
 #1.0.2
+- upgrade to spring boot 2.7.0
+- native image compatibility added
 
 #1.0.1
 - parent pom updated
