@@ -1,7 +1,7 @@
 package org.goafabric.spring.boot.examplebatch;
 
-import org.goafabric.spring.boot.examplebatch.person.Person;
-import org.goafabric.spring.boot.examplebatch.toy.Toy;
+import org.goafabric.spring.boot.examplebatch.domain.Person;
+import org.goafabric.spring.boot.examplebatch.domain.Toy;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

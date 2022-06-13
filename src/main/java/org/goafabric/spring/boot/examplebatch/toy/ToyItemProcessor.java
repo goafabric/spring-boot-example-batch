@@ -1,6 +1,7 @@
 package org.goafabric.spring.boot.examplebatch.toy;
 
 import lombok.extern.slf4j.Slf4j;
+import org.goafabric.spring.boot.examplebatch.domain.Toy;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Value;
 

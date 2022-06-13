@@ -1,6 +1,7 @@
 package org.goafabric.spring.boot.examplebatch.person;
 
 import lombok.extern.slf4j.Slf4j;
+import org.goafabric.spring.boot.examplebatch.domain.Person;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 
