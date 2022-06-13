@@ -19,7 +19,7 @@ services:
     image: postgres:13.2
     restart: 'no'
     ports:
-      - 50810:5432
+      - 50820:5432
     environment:
       - TZ=Europe/Berlin
       - POSTGRES_USER=example-batch
