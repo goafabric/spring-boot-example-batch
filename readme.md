@@ -12,5 +12,5 @@ docker run --rm goafabric/spring-boot-examplebatch-arm64v8:1.0.2-SNAPSHOT
 
 #docker run
 [[ "$(uname -m)" == "arm64"  ]] && ARCH="-arm64v8" && \
-docker pull goafabric/spring-boot-examplebatch${ARCH}:1.0.2-SNAPSHOT && \
-docker run --name spring-boot-example-batch --rm goafabric/spring-boot-examplebatch${ARCH}:1.0.2-SNAPSHOT
+docker pull goafabric/spring-boot-examplebatch:1.0.2-SNAPSHOT && \
+docker run --name spring-boot-example-batch --rm goafabric/spring-boot-examplebatch:1.0.2-SNAPSHOT
