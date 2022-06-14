@@ -8,7 +8,7 @@ services:
       - spring.datasource.url=jdbc:postgresql://batch-postgres:5432/customer
       - spring.datasource.username=example-batch
       - spring.datasource.password=example-batch
-#      - spring.batch.rate=500
+#      - spring.batch.scheduler.rate=500
     command: ["-Xmx${_Values_resources_requests_memory}"]
     
     depends_on:
