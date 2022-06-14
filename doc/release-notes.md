@@ -1,4 +1,6 @@
 #1.0.3
+- ItemReader added
+- Jobstarter + Scheduler added
 
 #1.0.2
 - upgrade to spring boot 2.7.0
