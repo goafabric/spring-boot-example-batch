@@ -19,7 +19,6 @@ public class ToyItemWriter extends JdbcBatchItemWriter<Toy> {
         this.sql = sql;
     }
 
-    //Generate efficient JDBC writer with batch update, with the given Pojo
     @Override
     public void afterPropertiesSet() {
         this.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());

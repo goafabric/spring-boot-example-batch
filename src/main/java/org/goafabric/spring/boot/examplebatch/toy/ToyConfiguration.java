@@ -59,7 +59,6 @@ public class ToyConfiguration {
                 .fieldSetMapper(new BeanWrapperFieldSetMapper<Toy>() {{
                     setTargetType(Toy.class);
                 }}).build();
-        //return new GenericCsvItemReader<>(Toy.class, new ClassPathResource("catalogdata/toy-catalog.csv"), new String[]{"id", "toyName", "price"});
     }
 
     @Bean
