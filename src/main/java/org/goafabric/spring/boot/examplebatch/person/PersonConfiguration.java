@@ -1,5 +1,7 @@
 package org.goafabric.spring.boot.examplebatch.person;
 
+
+
 import lombok.SneakyThrows;
 import org.goafabric.spring.boot.examplebatch.domain.Person;
 import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
@@ -18,12 +20,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.nativex.hint.TypeAccess;
+import org.springframework.nativex.hint.TypeHint;
 
 import javax.sql.DataSource;
 
-/**
- * @author Michael Minella
- */
+@TypeHint(types = {Person.class}, access = { TypeAccess.DECLARED_CONSTRUCTORS, TypeAccess.PUBLIC_METHODS })
 @Configuration(proxyBeanMethods = false) //needed for spring-native
 public class PersonConfiguration {
 
