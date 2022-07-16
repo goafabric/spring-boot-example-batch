@@ -2,6 +2,9 @@
 - ItemReader added
 - Jobstarter + Scheduler added
 
+- upgrade to Spring Boot 2.7.1
+- upgrade to Spring Boot 0.12.1
+
 #1.0.2
 - upgrade to spring boot 2.7.0
 - native image compatibility added
