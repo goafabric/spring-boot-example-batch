@@ -16,7 +16,7 @@ services:
 
   batch-postgres:
     container_name: batch-postgres
-    image: postgres:14.1
+    image: postgres:14.4
     restart: 'no'
     ports:
       - 50820:5432
