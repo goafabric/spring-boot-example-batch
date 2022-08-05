@@ -8,9 +8,9 @@ select * from catalogs.batch_job_execution
 select * from catalogs.toy_catalog
 select * from catalogs.person_catalog
 
-docker run --rm goafabric/spring-boot-examplebatch-arm64v8:2.0.0-SNAPSHOT
+docker run --rm goafabric/spring-boot-examplebatch-arm64v8:2.0.0
 
 #docker run
 [[ "$(uname -m)" == "arm64"  ]] && ARCH="-arm64v8" && \
-docker pull goafabric/spring-boot-examplebatch:2.0.0-SNAPSHOT && \
-docker run --name spring-boot-example-batch --rm goafabric/spring-boot-examplebatch:2.0.0-SNAPSHOT
+docker pull goafabric/spring-boot-examplebatch:2.0.0 && \
+docker run --name spring-boot-example-batch --rm goafabric/spring-boot-examplebatch:2.0.0
