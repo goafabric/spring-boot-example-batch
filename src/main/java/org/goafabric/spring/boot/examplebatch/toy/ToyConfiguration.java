@@ -4,10 +4,11 @@ import org.goafabric.spring.boot.examplebatch.domain.Toy;
 import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
@@ -25,14 +27,14 @@ import javax.sql.DataSource;
 @Configuration(proxyBeanMethods = false)
 public class ToyConfiguration {
     @Autowired
-    private JobBuilderFactory jobBuilderFactory;
+    private JobRepository jobRepository;
 
     @Autowired
-    private StepBuilderFactory stepBuilderFactory;
+    private PlatformTransactionManager ptm;
 
     @Bean
     public Job toyCatalogJob(@Qualifier("toyCatalogStep") Step toyCatalogStep, JobCompletionListener listener) {
-        return jobBuilderFactory.get("toyCatalogJob")
+        return new JobBuilder("toyCatalogJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .listener(listener).flow(toyCatalogStep).end()
                 .build();
@@ -42,8 +44,8 @@ public class ToyConfiguration {
     public Step toyCatalogStep(ItemReader<Toy> toyItemReader,
                            ItemProcessor<Toy, Toy> toyItemProcessor,
                            ItemWriter<Toy> toyItemWriter) {
-        return this.stepBuilderFactory.get("toyStep")
-                .<Toy, Toy>chunk(2)
+        return new StepBuilder("toyStep", jobRepository)
+                .<Toy, Toy>chunk(2, ptm)
                 .reader(toyItemReader)
                 .processor(toyItemProcessor)
                 .writer(toyItemWriter)
