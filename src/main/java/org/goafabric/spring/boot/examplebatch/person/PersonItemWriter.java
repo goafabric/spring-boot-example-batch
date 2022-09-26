@@ -6,7 +6,6 @@ import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourc
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 
 import javax.sql.DataSource;
-import java.util.List;
 
 @Slf4j
 public class PersonItemWriter extends JdbcBatchItemWriter<Person> {
@@ -27,8 +26,11 @@ public class PersonItemWriter extends JdbcBatchItemWriter<Person> {
         super.afterPropertiesSet();
     }
 
+    /*
     public void write(List<? extends Person> items) throws Exception {
         items.forEach(item -> log.info("Writing item: {}", item));
         super.write(items);
     }
+    
+     */
 }

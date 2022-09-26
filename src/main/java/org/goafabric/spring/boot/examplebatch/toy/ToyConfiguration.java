@@ -18,12 +18,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.nativex.hint.TypeAccess;
-import org.springframework.nativex.hint.TypeHint;
 
 import javax.sql.DataSource;
 
-@TypeHint(types = {Toy.class}, access = { TypeAccess.DECLARED_CONSTRUCTORS, TypeAccess.PUBLIC_METHODS })
+//@TypeHint(types = {Toy.class}, access = { TypeAccess.DECLARED_CONSTRUCTORS, TypeAccess.PUBLIC_METHODS })
 @Configuration(proxyBeanMethods = false)
 public class ToyConfiguration {
     @Autowired
