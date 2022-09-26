@@ -2,6 +2,7 @@ package org.goafabric.spring.boot.examplebatch.toy;
 
 import lombok.extern.slf4j.Slf4j;
 import org.goafabric.spring.boot.examplebatch.domain.Toy;
+import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 
@@ -26,11 +27,9 @@ public class ToyItemWriter extends JdbcBatchItemWriter<Toy> {
         super.afterPropertiesSet();
     }
 
-    /*
-    public void write(List<? extends Toy> items) throws Exception {
-        items.forEach(item -> log.info("Writing item: {}", item));
-        super.write(items);
+    public void write(final Chunk<? extends Toy> chunk) throws Exception {
+        chunk.forEach(ch -> log.info("Writing item: {}", ch));
+        super.write(chunk);
     }
-    
-     */
+
 }
