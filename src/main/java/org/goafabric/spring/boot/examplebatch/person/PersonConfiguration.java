@@ -35,8 +35,8 @@ public class PersonConfiguration {
 
 
     @Bean
-    public Job personCatalogJob(@Qualifier("personStep") Step personStep, JobCompletionListener listener) {
-        return new JobBuilder("personCatalogJob", jobRepository)
+    public Job personJob(@Qualifier("personStep") Step personStep, JobCompletionListener listener) {
+        return new JobBuilder("personJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .listener(listener).flow(personStep).end()
                 .build();

@@ -33,15 +33,15 @@ public class ToyConfiguration {
     private PlatformTransactionManager ptm;
 
     @Bean
-    public Job toyCatalogJob(@Qualifier("toyCatalogStep") Step toyCatalogStep, JobCompletionListener listener) {
-        return new JobBuilder("toyCatalogJob", jobRepository)
+    public Job toyJob(@Qualifier("toyStep") Step toyStep, JobCompletionListener listener) {
+        return new JobBuilder("toyJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
-                .listener(listener).flow(toyCatalogStep).end()
+                .listener(listener).flow(toyStep).end()
                 .build();
     }
 
-    @Bean(name = "toyCatalogStep")
-    public Step toyCatalogStep(ItemReader<Toy> toyItemReader,
+    @Bean(name = "toyStep")
+    public Step toyStep(ItemReader<Toy> toyItemReader,
                            ItemProcessor<Toy, Toy> toyItemProcessor,
                            ItemWriter<Toy> toyItemWriter) {
         return new StepBuilder("toyStep", jobRepository)
