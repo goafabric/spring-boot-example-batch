@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-//@EnableScheduling
+@EnableScheduling
 public class JobLauncherStarter implements CommandLineRunner {
     @Autowired
     private JobLauncher jobLauncher;
@@ -41,7 +43,7 @@ public class JobLauncherStarter implements CommandLineRunner {
         }
     }
 
-    //@Scheduled(fixedRateString = "${spring.batch.scheduler.rate}")
+    @Scheduled(fixedRateString = "${spring.batch.scheduler.rate}")
     public void schedule() throws Exception {
         if (schedulerEnabled) {
             start(new JobParameters());
