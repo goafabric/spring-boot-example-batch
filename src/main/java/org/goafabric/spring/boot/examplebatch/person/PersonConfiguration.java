@@ -16,7 +16,6 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -35,7 +34,7 @@ public class PersonConfiguration {
 
 
     @Bean
-    public Job personJob(@Qualifier("personStep") Step personStep, JobCompletionListener listener) {
+    public Job personJob(Step personStep, JobCompletionListener listener) {
         return new JobBuilder("personJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .listener(listener).flow(personStep).end()

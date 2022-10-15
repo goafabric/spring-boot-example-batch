@@ -15,7 +15,6 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -33,7 +32,7 @@ public class ToyConfiguration {
     private PlatformTransactionManager ptm;
 
     @Bean
-    public Job toyJob(@Qualifier("toyStep") Step toyStep, JobCompletionListener listener) {
+    public Job toyJob(Step toyStep, JobCompletionListener listener) {
         return new JobBuilder("toyJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .listener(listener).flow(toyStep).end()
