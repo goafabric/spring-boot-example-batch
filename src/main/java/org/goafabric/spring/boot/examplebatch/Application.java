@@ -22,6 +22,18 @@ public class Application {
     static class ApplicationRuntimeHints implements RuntimeHintsRegistrar {
         @Override
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
+            //pojos
+            hints.reflection().registerType(org.goafabric.spring.boot.examplebatch.domain.Person.class,
+                    MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.INVOKE_DECLARED_METHODS);
+
+            hints.reflection().registerType(org.goafabric.spring.boot.examplebatch.domain.Toy.class,
+                    MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.INVOKE_DECLARED_METHODS);
+
+            //resources
+            hints.resources().registerPattern("db/migration/*.sql");
+            hints.resources().registerPattern("catalogdata/*.csv");
+
+            //fields
             Arrays.stream(java.sql.Types.class.getDeclaredFields()).forEach(f -> hints.reflection().registerField(f));
 
             //proxies
@@ -33,21 +45,10 @@ public class Application {
                     org.springframework.aop.SpringProxy.class,
                     org.springframework.aop.framework.Advised.class,
                     org.springframework.core.DecoratingProxy.class
-                    );
+            );
 
             hints.proxies().registerJdkProxy(
                     AopProxyUtils.completeJdkProxyInterfaces(org.springframework.batch.core.explore.JobExplorer.class));
-
-            //pojos
-            hints.reflection().registerType(org.goafabric.spring.boot.examplebatch.domain.Person.class,
-                    MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.INVOKE_DECLARED_METHODS);
-
-            hints.reflection().registerType(org.goafabric.spring.boot.examplebatch.domain.Toy.class,
-                    MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.INVOKE_DECLARED_METHODS);
-
-            //resources
-            hints.resources().registerPattern("db/migration/*.sql");
-            hints.resources().registerPattern("catalogdata/*.csv");
 
         }
     }
