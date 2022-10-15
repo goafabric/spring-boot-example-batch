@@ -7,7 +7,6 @@ import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportRuntimeHints;
-import org.springframework.core.io.ClassPathResource;
 
 import java.util.Arrays;
 
@@ -47,9 +46,8 @@ public class Application {
                     MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.INVOKE_DECLARED_METHODS);
 
             //resources
-            hints.resources().registerResource(new ClassPathResource("db/migration/V1__init.sql"));
-            hints.resources().registerResource(new ClassPathResource("catalogdata/person-catalog.csv"));
-            hints.resources().registerResource(new ClassPathResource("catalogdata/toy-catalog.csv"));
+            hints.resources().registerPattern("db/migration/*.sql");
+            hints.resources().registerPattern("catalogdata/*.csv");
 
         }
     }
