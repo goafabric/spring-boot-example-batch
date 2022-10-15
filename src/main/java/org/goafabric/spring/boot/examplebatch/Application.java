@@ -1,5 +1,7 @@
 package org.goafabric.spring.boot.examplebatch;
 
+import org.springframework.aop.framework.AopProxyUtils;
+import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.boot.SpringApplication;
@@ -21,10 +23,9 @@ public class Application {
     static class ApplicationRuntimeHints implements RuntimeHintsRegistrar {
         @Override
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
-            hints.resources().registerResource(new ClassPathResource("db/migration/V1__init.sql"));
-            
             Arrays.stream(java.sql.Types.class.getDeclaredFields()).forEach(f -> hints.reflection().registerField(f));
 
+            //proxies
             hints.proxies().registerJdkProxy(
                     org.springframework.batch.item.ItemProcessor.class,
                     org.springframework.aop.scope.ScopedObject.class,
@@ -36,11 +37,19 @@ public class Application {
                     );
 
             hints.proxies().registerJdkProxy(
-                    org.springframework.batch.core.explore.JobExplorer.class,
-                    org.springframework.aop.SpringProxy.class,
-                    org.springframework.aop.framework.Advised.class,
-                    org.springframework.core.DecoratingProxy.class
-            );
+                    AopProxyUtils.completeJdkProxyInterfaces(org.springframework.batch.core.explore.JobExplorer.class));
+
+            //pojos
+            hints.reflection().registerType(org.goafabric.spring.boot.examplebatch.domain.Person.class,
+                    MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.INVOKE_DECLARED_METHODS);
+
+            hints.reflection().registerType(org.goafabric.spring.boot.examplebatch.domain.Toy.class,
+                    MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.INVOKE_DECLARED_METHODS);
+
+            //resources
+            hints.resources().registerResource(new ClassPathResource("db/migration/V1__init.sql"));
+            hints.resources().registerResource(new ClassPathResource("catalogdata/person-catalog.csv"));
+            hints.resources().registerResource(new ClassPathResource("catalogdata/toy-catalog.csv"));
 
         }
     }
