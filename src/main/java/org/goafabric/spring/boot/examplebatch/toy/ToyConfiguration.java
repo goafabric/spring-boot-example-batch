@@ -22,7 +22,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
-//@TypeHint(types = {Toy.class}, access = { TypeAccess.DECLARED_CONSTRUCTORS, TypeAccess.PUBLIC_METHODS })
 @Configuration(proxyBeanMethods = false)
 public class ToyConfiguration {
     @Autowired

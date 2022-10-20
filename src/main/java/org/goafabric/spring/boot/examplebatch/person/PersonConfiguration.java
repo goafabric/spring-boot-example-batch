@@ -23,7 +23,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
-//@TypeHint(types = {Person.class}, access = { TypeAccess.DECLARED_CONSTRUCTORS, TypeAccess.PUBLIC_METHODS })
 @Configuration(proxyBeanMethods = false) //needed for spring-native
 public class PersonConfiguration {
     @Autowired
