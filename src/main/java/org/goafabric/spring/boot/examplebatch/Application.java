@@ -1,14 +1,11 @@
 package org.goafabric.spring.boot.examplebatch;
 
-import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportRuntimeHints;
-
-import java.util.Arrays;
 
 //@EnableBatchProcessing
 @SpringBootApplication
@@ -34,9 +31,10 @@ public class Application {
             hints.resources().registerPattern("catalogdata/*.csv");
 
             //fields
-            Arrays.stream(java.sql.Types.class.getDeclaredFields()).forEach(f -> hints.reflection().registerField(f));
+            //Arrays.stream(java.sql.Types.class.getDeclaredFields()).forEach(f -> hints.reflection().registerField(f));
 
             //proxies
+            /*
             hints.proxies().registerJdkProxy(
                     org.springframework.batch.item.ItemProcessor.class,
                     org.springframework.aop.scope.ScopedObject.class,
@@ -49,6 +47,8 @@ public class Application {
 
             hints.proxies().registerJdkProxy(
                     AopProxyUtils.completeJdkProxyInterfaces(org.springframework.batch.core.explore.JobExplorer.class));
+                    */
+
 
         }
     }
