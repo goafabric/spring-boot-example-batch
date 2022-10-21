@@ -29,27 +29,6 @@ public class Application {
             //resources
             hints.resources().registerPattern("db/migration/*.sql");
             hints.resources().registerPattern("catalogdata/*.csv");
-
-            //fields
-            //Arrays.stream(java.sql.Types.class.getDeclaredFields()).forEach(f -> hints.reflection().registerField(f));
-
-            //proxies
-            /*
-            hints.proxies().registerJdkProxy(
-                    org.springframework.batch.item.ItemProcessor.class,
-                    org.springframework.aop.scope.ScopedObject.class,
-                    java.io.Serializable.class,
-                    org.springframework.aop.framework.AopInfrastructureBean.class,
-                    org.springframework.aop.SpringProxy.class,
-                    org.springframework.aop.framework.Advised.class,
-                    org.springframework.core.DecoratingProxy.class
-            );
-
-            hints.proxies().registerJdkProxy(
-                    AopProxyUtils.completeJdkProxyInterfaces(org.springframework.batch.core.explore.JobExplorer.class));
-                    */
-
-
         }
     }
 
