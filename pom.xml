@@ -13,10 +13,10 @@
 
     <groupId>org.example</groupId>
     <artifactId>spring-boot-example-batch</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>3.0.0-RC1</version>
 
     <properties>
-        <spring.boot.version>3.0.0-M5</spring.boot.version>
+        <spring.boot.version>3.0.0-RC1</spring.boot.version>
         <spring.cloud.version>2022.0.0-M5</spring.cloud.version>
         <spring.native.buildpack.version>gcr.io/paketo-buildpacks/java-native-image:7.35.0</spring.native.buildpack.version>
     </properties>

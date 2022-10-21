@@ -1,6 +1,6 @@
 _Values_root_name="example-batch"
 
 _Values_image_repository=goafabric/spring-boot-example-batch
-_Values_image_tag=3.0.0-SNAPSHOT
+_Values_image_tag=3.0.0-RC1
 
 _Values_resources_requests_memory=256M
