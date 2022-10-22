@@ -23,7 +23,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
-@Configuration(proxyBeanMethods = false) //needed for spring-native
+@Configuration
 public class PersonConfiguration {
     @Autowired
     private JobRepository jobRepository;
