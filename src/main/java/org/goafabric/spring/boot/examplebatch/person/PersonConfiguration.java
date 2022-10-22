@@ -40,7 +40,7 @@ public class PersonConfiguration {
                 .build();
     }
 
-    @Bean(name = "personStep") //name needed for spring-native with Qualifier above + Injection of Reader / Writer .. only works like this, not via bean method call
+    @Bean
     public Step personStep(ItemReader<Person> personItemReader,
                             ItemProcessor<Person, Person> personItemProcessor,
                             ItemWriter<Person> personItemWriter) {

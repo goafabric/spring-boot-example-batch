@@ -38,7 +38,7 @@ public class ToyConfiguration {
                 .build();
     }
 
-    @Bean(name = "toyStep")
+    @Bean
     public Step toyStep(ItemReader<Toy> toyItemReader,
                            ItemProcessor<Toy, Toy> toyItemProcessor,
                            ItemWriter<Toy> toyItemWriter) {
