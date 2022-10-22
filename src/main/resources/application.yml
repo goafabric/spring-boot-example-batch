@@ -22,8 +22,6 @@ spring:
       enabled: false
       rate: 5000
 
-spring.sql.init.mode: always
-spring.sql.init.schema-locations: classpath*:db/migration/V1__init.sql
 spring.jpa.hibernate.ddl-auto: none
 
 #log levels
@@ -31,7 +29,7 @@ logging.level.root: "WARN"
 logging.level.org.goafabric: "INFO"
 
 logging.level.org.springframework: "INFO"
-logging.level.org.flywaydb.core: "INFO"
+logging.level.org.flywaydb.core: "DEBUG"
 logging.level.org.hibernate.SQL: "INFO"
 
 #logging.pattern.console: "%white(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"

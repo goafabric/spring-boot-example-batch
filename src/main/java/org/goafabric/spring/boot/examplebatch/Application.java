@@ -27,7 +27,6 @@ public class Application {
                     MemberCategory.INVOKE_DECLARED_CONSTRUCTORS, MemberCategory.INVOKE_DECLARED_METHODS);
 
             //resources
-            hints.resources().registerPattern("db/migration/*.sql");
             hints.resources().registerPattern("catalogdata/*.csv");
         }
     }
