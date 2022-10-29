@@ -76,15 +76,64 @@
     </build>
 
     <!-- native application build -->
-    <!--
     <profiles>
         <profile>
-            <id>docker-image-native</id>
+            <id>docker-image-native-amd64</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.springframework.experimental</groupId>
                         <artifactId>spring-aot-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>build-image</id>
+                                <goals><goal>build-image</goal></goals>
+                                <configuration>
+                                    <image>
+                                        <buildpacks>
+                                            <buildpack>gcr.io/paketo-buildpacks/java-native-image:7.33.0</buildpack>
+                                        </buildpacks>
+                                    </image>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>docker-image-native-arm64</id>
+            <properties>
+                <native.image.name>${docker.registry}/${project.artifactId}-native-arm64v8:${project.version}</native.image.name>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.experimental</groupId>
+                        <artifactId>spring-aot-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>build-image</id>
+                                <goals><goal>build-image</goal></goals>
+                                <configuration>
+                                    <image>
+                                        <builder>dashaun/java-native-builder-arm64:7.33.0</builder>
+                                    </image>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
@@ -94,7 +143,6 @@
             </build>
         </profile>
     </profiles>
-    -->
 
     <repositories>
         <repository>
