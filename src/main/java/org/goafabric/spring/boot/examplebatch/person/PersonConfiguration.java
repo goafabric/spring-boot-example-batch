@@ -4,6 +4,7 @@ package org.goafabric.spring.boot.examplebatch.person;
 import lombok.SneakyThrows;
 import org.goafabric.spring.boot.examplebatch.domain.Person;
 import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
+import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -24,6 +25,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
+@RegisterReflectionForBinding(Person.class)
 public class PersonConfiguration {
     @Autowired
     private JobRepository jobRepository;
