@@ -16,7 +16,7 @@
     <version>3.0.0-RC1</version>
 
     <properties>
-        <spring.boot.version>3.0.0-RC1</spring.boot.version>
+        <spring.boot.version>${spring.boot-3.version}</spring.boot.version>
         <spring.cloud.version>2022.0.0-RC1</spring.cloud.version>
     </properties>
 
@@ -95,7 +95,7 @@
                                 <configuration>
                                     <image>
                                         <buildpacks>
-                                            <buildpack>gcr.io/paketo-buildpacks/bellsoft-liberica:9.9.0-ea</buildpack>
+                                            <buildpack>${spring.native.buildpack.version}</buildpack>
                                             <buildpack>gcr.io/paketo-buildpacks/java-native-image</buildpack>
                                         </buildpacks>
                                     </image>
