@@ -8,9 +8,15 @@ select * from catalogs.batch_job_execution
 select * from catalogs.toy_catalog
 select * from catalogs.person_catalog
 
-docker run --rm goafabric/spring-boot-examplebatch-arm64v8:2.0.1-SNAPSHOT
+#docker compose
+go to /src/deploy/docker and do "./stack up"
 
-#docker run
-[[ "$(uname -m)" == "arm64"  ]] && ARCH="-arm64v8" && \
-docker pull goafabric/spring-boot-examplebatch:2.0.1-SNAPSHOT && \
-docker run --name spring-boot-example-batch --rm goafabric/spring-boot-examplebatch:2.0.1-SNAPSHOT
+#run jvm multi image
+docker pull goafabric/spring-boot-example-batch:3.0.0-RC2 && docker run --name spring-boot-example-batch --rm -p50900:50900 goafabric/spring-boot-example-batch:3.0.0-RC2
+
+#run native image
+docker pull goafabric/spring-boot-example-batch-native:3.0.0-RC2 && docker run --name spring-boot-example-batch-native --rm -p50900:50900 goafabric/spring-boot-example-batch-native:3.0.0-RC2 -Xmx32m
+
+#run native image arm
+docker pull goafabric/spring-boot-example-batch-native-arm64v8:3.0.0-RC2 && docker run --name spring-boot-example-batch-native-arm64v8 --rm -p50900:50900 goafabric/spring-boot-example-batch-native-arm64v8:3.0.0-RC2 -Xmx32m
+
