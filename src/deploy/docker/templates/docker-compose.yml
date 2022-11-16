@@ -1,7 +1,7 @@
 version: '3.1'
 services:
-  spring-batch:
-    container_name: spring-batch
+  application:
+    container_name: ${_Values_root_name}-application
     image: ${_Values_image_repository}${_Values_image_native}:${_Values_image_tag}
     environment:
       - TZ=Europe/Berlin
@@ -12,11 +12,11 @@ services:
     command: ["-Xmx${_Values_resources_requests_memory}"]
     
     depends_on:
-      batch-postgres:
+      postgres:
         condition: service_healthy
         
-  batch-postgres:
-    container_name: batch-postgres
+  postgres:
+    container_name: ${_Values_root_name}-postgres
     image: postgres:14.4
     restart: 'no'
     ports:
