@@ -12,11 +12,11 @@ select * from catalogs.person_catalog
 go to /src/deploy/docker and do "./stack up"
 
 #run jvm multi image
-docker pull goafabric/spring-boot-example-batch:3.0.0-RC2 && docker run --name spring-boot-example-batch --rm -p50900:50900 goafabric/spring-boot-example-batch:3.0.0-RC2
+docker pull goafabric/spring-boot-example-batch:3.0.0-RC3 && docker run --name spring-boot-example-batch --rm -p50900:50900 goafabric/spring-boot-example-batch:3.0.0-RC3
 
 #run native image
-docker pull goafabric/spring-boot-example-batch-native:3.0.0-RC2 && docker run --name spring-boot-example-batch-native --rm -p50900:50900 goafabric/spring-boot-example-batch-native:3.0.0-RC2 -Xmx32m
+docker pull goafabric/spring-boot-example-batch-native:3.0.0-RC3 && docker run --name spring-boot-example-batch-native --rm -p50900:50900 goafabric/spring-boot-example-batch-native:3.0.0-RC3 -Xmx32m
 
 #run native image arm
-docker pull goafabric/spring-boot-example-batch-native-arm64v8:3.0.0-RC2 && docker run --name spring-boot-example-batch-native-arm64v8 --rm -p50900:50900 goafabric/spring-boot-example-batch-native-arm64v8:3.0.0-RC2 -Xmx32m
+docker pull goafabric/spring-boot-example-batch-native-arm64v8:3.0.0-RC3 && docker run --name spring-boot-example-batch-native-arm64v8 --rm -p50900:50900 goafabric/spring-boot-example-batch-native-arm64v8:3.0.0-RC3 -Xmx32m
 
