@@ -19,7 +19,7 @@ spring:
       table-prefix: batch.BATCH_ #prefix that saves the batch tables to the same schema as the catalogs, we could also use a totally seperated schema like "BATCH"
 
     scheduler:
-      enabled: true
+      enabled: false
       rate: 5000
 
 
