@@ -1,12 +1,12 @@
 package org.goafabric.spring.boot.examplebatch;
 
+import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
+import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportRuntimeHints;
-
-import java.util.HashMap;
 
 //@EnableBatchProcessing
 @SpringBootApplication
@@ -23,11 +23,7 @@ public class Application {
             //resources
             hints.resources().registerPattern("catalogdata/*.csv");
 
-            //hints for executioncontext on 2nd run
-            hints.serialization().registerType(HashMap.class);
-            hints.serialization().registerType(java.lang.Integer.class);
-            hints.serialization().registerType(java.lang.Number.class);
-            hints.serialization().registerType(java.lang.String.class);
+            hints.proxies().registerJdkProxy(AopProxyUtils.completeJdkProxyInterfaces(JobOperator.class));
         }
     }
 
