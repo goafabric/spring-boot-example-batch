@@ -50,7 +50,7 @@ public class JobLauncherStarter implements CommandLineRunner {
         }
     }
     public void start(JobParameters jobParameters) throws Exception {
-        jobLauncher.run(personJob, jobParameters);
+        //jobLauncher.run(personJob, jobParameters);
         jobLauncher.run(toyJob, jobParameters);
     }
 
