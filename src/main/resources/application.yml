@@ -1,8 +1,8 @@
 ## persistence section
 spring:
   datasource:
-    #url: jdbc:h2:mem:batch
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:h2:mem:batch
+    #url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: postgres
 
@@ -16,7 +16,7 @@ spring:
 
     jdbc:
       initialize-schema: never
-      table-prefix: batch.BATCH_ #prefix that saves the batch tables to the same schema as the catalogs, we could also use a totally seperated schema like "BATCH"
+      table-prefix: catalogs.BATCH_ #prefix that saves the batch tables to the same schema as the catalogs, we could also use a totally seperated schema like "BATCH"
 
     scheduler:
       enabled: false
