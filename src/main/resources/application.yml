@@ -22,7 +22,7 @@ spring:
       enabled: false
       rate: 5000
 
-spring.flyway.default-schema: catalogs
+spring.flyway.default-schema: catalogs #flyway will create the schema if it does not exist yet, hence we need to do still create it with "if exists" for H2
 
 
 #log levels
