@@ -1,5 +1,5 @@
 -- separate schema
---CREATE SCHEMA catalogs;
+CREATE SCHEMA IF NOT EXISTS catalogs;
 
 -- catalog tables
 CREATE TABLE catalogs.person_catalog  (
