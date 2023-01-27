@@ -4,11 +4,22 @@ services:
     container_name: ${_Values_root_name}-application
     image: ${_Values_image_repository}${_Values_image_native}:${_Values_image_tag}
     environment:
-      - TZ=Europe/Berlin
-      - spring.datasource.url=jdbc:postgresql://${_Values_root_name}-postgres:5432/customer
-      - spring.datasource.username=example-batch
-      - spring.datasource.password=example-batch
-      - spring.batch.scheduler.enabled=true
+      #application
+      TZ: "Europe/Berlin"
+      spring.batch.scheduler.enabled: "true"
+
+      #persistence
+      spring.datasource.url: "jdbc:postgresql://${_Values_root_name}-postgres:5432/customer"
+
+      #secrets
+      spring.datasource.username: "example-batch"
+      spring.datasource.password: "example-batch"
+
+      #log levels
+      logging.level.root: "WARN"
+      logging.level.org.goafabric: "INFO"
+      logging.level.org.springframework: "INFO"
+
     command: ["-Xmx${_Values_resources_requests_memory}"]
     
     depends_on:
@@ -22,10 +33,13 @@ services:
     ports:
       - 50820:5432
     environment:
-      - TZ=Europe/Berlin
-      - POSTGRES_USER=example-batch
-      - POSTGRES_PASSWORD=example-batch
-      - POSTGRES_DB=customer
+      TZ: "Europe/Berlin"
+      POSTGRES_DB: "customer"
+
+      #secrets
+      POSTGRES_USER: "example-batch"
+      POSTGRES_PASSWORD: "example-batch"
+
     command: postgres -c 'shared_buffers=64MB' -c 'max_connections=30' -c 'shared_preload_libraries=pg_stat_statements'
     healthcheck:
         test: "sh -c pg_isready"
