@@ -4,12 +4,10 @@ import com.github.javafaker.Faker;
 import lombok.extern.slf4j.Slf4j;
 import org.goafabric.spring.boot.examplebatch.domain.Person;
 import org.springframework.batch.item.ItemProcessor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
 public class PersonItemProcessor implements ItemProcessor<Person, Person> {
-    @Autowired
-    private Faker faker;
+    private Faker faker = new Faker();
 
     @Override
     public Person process(Person person) {

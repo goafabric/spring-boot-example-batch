@@ -1,7 +1,6 @@
 package org.goafabric.spring.boot.examplebatch.person;
 
 
-import com.github.javafaker.Faker;
 import org.goafabric.spring.boot.examplebatch.domain.Person;
 import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
@@ -94,8 +93,4 @@ public class PersonAnonymizerConfiguration {
         //return new JdbcBatchItemWriterBuilder<Person>().dataSource(dataSource).sql(sql).beanMapped().build();
     }
 
-    @Bean
-    public Faker faker() {
-        return new Faker();
-    }
 }
