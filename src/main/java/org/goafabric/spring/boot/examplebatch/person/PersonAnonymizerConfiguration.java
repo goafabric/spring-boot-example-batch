@@ -76,8 +76,8 @@ public class PersonAnonymizerConfiguration {
         return new JdbcCursorItemReaderBuilder<Person>()
                 .name("personItemReader")
                 .dataSource(dataSource)
-                .sql("SELECT * FROM masterdata.person")
                 .beanRowMapper(Person.class)
+                .sql("SELECT * FROM masterdata.person")
                 .build();
     }
 
