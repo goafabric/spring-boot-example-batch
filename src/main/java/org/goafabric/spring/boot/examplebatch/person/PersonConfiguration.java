@@ -78,7 +78,8 @@ public class PersonConfiguration {
 
     @Bean
     public JdbcBatchItemWriter<Person> personItemWriter(DataSource dataSource) {
-        final String sql = "INSERT INTO catalogs.person_catalog (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
+        final String sql = "UPDATE catalogs.person SET first_name = :firstName, last_name = :lastName WHERE id = :id" ;
+        //final String sql = "INSERT INTO catalogs.person_catalog (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
         return new PersonItemWriter(dataSource, sql);
     }
 
