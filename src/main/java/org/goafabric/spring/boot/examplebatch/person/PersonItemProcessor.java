@@ -7,7 +7,7 @@ import org.springframework.batch.item.ItemProcessor;
 
 @Slf4j
 public class PersonItemProcessor implements ItemProcessor<Person, Person> {
-    private Faker faker = new Faker();
+    private final Faker faker = new Faker();
 
     @Override
     public Person process(Person person) {
