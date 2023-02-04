@@ -32,8 +32,11 @@ repositories {
 }
 
 dependencies {
-	//web
+	//batch
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
+
+	//3rd party
+	implementation 'com.github.javafaker:javafaker:1.0.2'
 
 	//code generation
 	compileOnly 'org.projectlombok:lombok'

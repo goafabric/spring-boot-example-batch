@@ -1,6 +1,7 @@
 package org.goafabric.spring.boot.examplebatch.person;
 
 
+import com.github.javafaker.Faker;
 import org.goafabric.spring.boot.examplebatch.domain.Person;
 import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
@@ -79,8 +80,11 @@ public class PersonConfiguration {
     @Bean
     public JdbcBatchItemWriter<Person> personItemWriter(DataSource dataSource) {
         final String sql = "UPDATE catalogs.person SET first_name = :firstName, last_name = :lastName WHERE id = :id" ;
-        //final String sql = "INSERT INTO catalogs.person_catalog (id, catalog_version, first_name, last_name) VALUES (:id, :catalogVersion, :firstName, :lastName)";
         return new PersonItemWriter(dataSource, sql);
     }
 
+    @Bean
+    public Faker faker() {
+        return new Faker();
+    }
 }
