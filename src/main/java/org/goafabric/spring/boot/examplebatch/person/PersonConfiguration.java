@@ -1,7 +1,6 @@
 package org.goafabric.spring.boot.examplebatch.person;
 
 
-import lombok.SneakyThrows;
 import org.goafabric.spring.boot.examplebatch.domain.Person;
 import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
@@ -16,6 +15,8 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
+import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -57,10 +58,17 @@ public class PersonConfiguration {
 
 
     @Bean
-    @SneakyThrows
     public ItemReader<Person> personItemReader() {
-        return new PersonItemReader(new ClassPathResource("catalogdata/person-catalog.csv"), new String[]{"id", "firstName", "lastName"});
+        return new FlatFileItemReaderBuilder<Person>()
+                .name("personItemReader")
+                .resource(new ClassPathResource("catalogdata/person-catalog.csv"))
+                .delimited()
+                .names(new String[]{"id", "firstName", "lastName"})
+                .fieldSetMapper(new BeanWrapperFieldSetMapper<Person>() {{
+                    setTargetType(Person.class);
+                }}).build();
     }
+
 
     @Bean
     @StepScope
