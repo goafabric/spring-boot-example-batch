@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @RegisterReflectionForBinding(Toy.class)
-public class ToyConfiguration {
+public class ToyImportConfiguration {
     @Autowired
     private JobRepository jobRepository;
 

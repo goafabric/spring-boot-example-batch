@@ -27,7 +27,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @RegisterReflectionForBinding(Person.class)
-public class PersonConfiguration {
+public class PersonAnonymizerConfiguration {
     @Autowired
     private JobRepository jobRepository;
 
