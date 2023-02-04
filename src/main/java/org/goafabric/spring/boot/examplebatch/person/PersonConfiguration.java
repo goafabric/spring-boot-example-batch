@@ -76,7 +76,7 @@ public class PersonConfiguration {
         return new JdbcCursorItemReaderBuilder<Person>()
                 .name("personItemReader")
                 .dataSource(dataSource)
-                .sql("SELECT * FROM catalogs.person")
+                .sql("SELECT * FROM masterdata.person")
                 .beanRowMapper(Person.class)
                 .build();
     }
@@ -89,7 +89,7 @@ public class PersonConfiguration {
 
     @Bean
     public JdbcBatchItemWriter<Person> personItemWriter(DataSource dataSource) {
-        final String sql = "UPDATE catalogs.person SET first_name = :firstName, last_name = :lastName WHERE id = :id" ;
+        final String sql = "UPDATE masterdata.person SET first_name = :firstName, last_name = :lastName WHERE id = :id" ;
         return new PersonItemWriter(dataSource, sql);
     }
 

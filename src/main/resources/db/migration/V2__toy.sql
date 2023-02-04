@@ -1,8 +1,8 @@
 -- separate schema
-CREATE SCHEMA IF NOT EXISTS catalogs;
+CREATE SCHEMA IF NOT EXISTS masterdata;
 
 -- catalog tables
-CREATE TABLE catalogs.person_catalog  (
+CREATE TABLE masterdata.person_catalog  (
    	id varchar(36) not null
 		constraint pk_people
 			primary key,
@@ -12,7 +12,7 @@ CREATE TABLE catalogs.person_catalog  (
     last_name VARCHAR(20)
 );
 
-CREATE TABLE catalogs.toy_catalog (
+CREATE TABLE masterdata.toy_catalog (
    	id varchar(36) not null
 		constraint pk_toys
 			primary key,

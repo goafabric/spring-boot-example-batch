@@ -16,13 +16,13 @@ spring:
 
     jdbc:
       initialize-schema: never
-      table-prefix: catalogs.BATCH_ #prefix that saves the batch tables to the same schema as the catalogs, we could also use a totally seperated schema like "BATCH"
+      table-prefix: masterdata.BATCH_ #prefix that saves the batch tables to the same schema as the masterdata, we could also use a totally seperated schema like "BATCH"
 
     scheduler:
       enabled: false
       rate: 5000
 
-spring.flyway.default-schema: catalogs #flyway will create the schema if it does not exist yet, hence we need to do still create it with "if exists" for H2
+spring.flyway.default-schema: masterdata #flyway will create the schema if it does not exist yet, hence we need to do still create it with "if exists" for H2
 
 
 #log levels
