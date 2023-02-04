@@ -16,13 +16,11 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
-import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
-import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
+import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -58,6 +56,7 @@ public class PersonConfiguration {
     }
 
 
+    /*
     @Bean
     public ItemReader<Person> personItemReader() {
         return new FlatFileItemReaderBuilder<Person>()
@@ -70,6 +69,17 @@ public class PersonConfiguration {
                 }}).build();
     }
 
+     */
+
+    @Bean
+    public   ItemReader<Person> personItemReader(DataSource dataSource) {
+        return new JdbcCursorItemReaderBuilder<Person>()
+                .name("personItemReader")
+                .dataSource(dataSource)
+                .sql("SELECT * FROM catalogs.person")
+                .beanRowMapper(Person.class)
+                .build();
+    }
 
     @Bean
     @StepScope
