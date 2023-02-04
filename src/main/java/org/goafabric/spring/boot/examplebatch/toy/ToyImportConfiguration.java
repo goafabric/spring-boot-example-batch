@@ -75,5 +75,6 @@ public class ToyImportConfiguration {
     public ItemWriter<Toy> toyItemWriter(DataSource dataSource) {
         final String sql = "INSERT INTO masterdata.toy_catalog (id, catalog_version, toy_name, price) VALUES (:id, :catalogVersion, :toyName, :price)";
         return new ToyItemWriter(dataSource, sql);
+        //return new JdbcBatchItemWriterBuilder<Toy>().dataSource(dataSource).sql(sql).beanMapped().build();
     }
 }

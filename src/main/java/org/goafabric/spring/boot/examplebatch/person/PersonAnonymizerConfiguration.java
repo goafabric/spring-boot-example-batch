@@ -91,6 +91,7 @@ public class PersonAnonymizerConfiguration {
     public JdbcBatchItemWriter<Person> personItemWriter(DataSource dataSource) {
         final String sql = "UPDATE masterdata.person SET first_name = :firstName, last_name = :lastName WHERE id = :id" ;
         return new PersonItemWriter(dataSource, sql);
+        //return new JdbcBatchItemWriterBuilder<Person>().dataSource(dataSource).sql(sql).beanMapped().build();
     }
 
     @Bean
