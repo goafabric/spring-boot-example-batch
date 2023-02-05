@@ -1,7 +1,6 @@
 package org.goafabric.spring.boot.examplebatch.job.address;
 
 
-import com.github.javafaker.Faker;
 import org.goafabric.spring.boot.examplebatch.domain.Address;
 import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
@@ -68,12 +67,18 @@ public class AddressAnonymizerConfiguration {
 
     @Bean
     @StepScope
-    public ItemProcessor<Address, Address> addressItemProcessor(Faker faker) {
-        return item -> Address.builder()
-                .id(item.getId())
-                .city(faker.address().cityName())
-                .street(faker.address().streetName())
-                .build();
+    public ItemProcessor<Address, Address> addressItemProcessor() {
+        return new ItemProcessor<Address, Address>() {
+
+            @Override
+            public Address process(Address item) throws Exception {
+                return Address.builder()
+                        .id(item.getId())
+                        .city("fake-city") //faker.address().cityName())
+                        .street("fake-street") //faker.address().streetName())
+                        .build();
+            }
+        };
     }
 
     @Bean
@@ -82,11 +87,6 @@ public class AddressAnonymizerConfiguration {
         return new JdbcBatchItemWriterBuilder<Address>()
                 .dataSource(dataSource).sql(sql).beanMapped()
                 .build();
-    }
-
-    @Bean
-    public Faker faker() {
-        return new Faker();
     }
 
 }

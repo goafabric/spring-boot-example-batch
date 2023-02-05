@@ -77,4 +77,9 @@ public class PersonAnonymizerConfiguration {
         return new PersonItemWriter(dataSource, sql);
     }
 
+    @Bean
+    public Faker faker() {
+        return new Faker();
+    }
+
 }
