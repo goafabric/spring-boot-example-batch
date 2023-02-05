@@ -54,22 +54,6 @@ public class PersonAnonymizerConfiguration {
                 .build();
     }
 
-
-    /*
-    @Bean
-    public ItemReader<Person> personItemReader() {
-        return new FlatFileItemReaderBuilder<Person>()
-                .name("personItemReader")
-                .resource(new ClassPathResource("catalogdata/person-catalog.csv"))
-                .delimited()
-                .names(new String[]{"id", "firstName", "lastName"})
-                .fieldSetMapper(new BeanWrapperFieldSetMapper<Person>() {{
-                    setTargetType(Person.class);
-                }}).build();
-    }
-
-     */
-
     @Bean
     public   ItemReader<Person> personItemReader(DataSource dataSource) {
         return new JdbcCursorItemReaderBuilder<Person>()
