@@ -24,6 +24,15 @@ public class Application {
             hints.resources().registerPattern("catalogdata/*.csv");
 
             hints.proxies().registerJdkProxy(AopProxyUtils.completeJdkProxyInterfaces(JobOperator.class));
+
+            /*
+            hints.reflection().registerType(FakeValuesService.class,
+                    MemberCategory.INVOKE_DECLARED_METHODS, MemberCategory.INTROSPECT_DECLARED_CONSTRUCTORS, MemberCategory.DECLARED_FIELDS);
+
+            hints.reflection().registerType(com.github.javafaker.Name.class,
+                    MemberCategory.INVOKE_DECLARED_METHODS, MemberCategory.INTROSPECT_DECLARED_CONSTRUCTORS, MemberCategory.DECLARED_FIELDS);
+
+             */
         }
     }
 
