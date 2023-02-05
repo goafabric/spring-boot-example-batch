@@ -1,6 +1,7 @@
-package org.goafabric.spring.boot.examplebatch.person;
+package org.goafabric.spring.boot.examplebatch.job.person;
 
 
+import com.github.javafaker.Faker;
 import org.goafabric.spring.boot.examplebatch.domain.Person;
 import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
@@ -32,7 +33,6 @@ public class PersonAnonymizerConfiguration {
 
     @Autowired
     private PlatformTransactionManager ptm;
-
 
     @Bean
     public Job personJob(@Qualifier("personStep") Step personStep, JobCompletionListener listener) {
@@ -67,14 +67,17 @@ public class PersonAnonymizerConfiguration {
     @Bean
     @StepScope
     public ItemProcessor<Person, Person> personItemProcessor() {
-        return new PersonItemProcessor();
+        return new PersonItemProcessor(personFaker());
     }
 
     @Bean
     public JdbcBatchItemWriter<Person> personItemWriter(DataSource dataSource) {
         final String sql = "UPDATE masterdata.person SET first_name = :firstName, last_name = :lastName WHERE id = :id" ;
         return new PersonItemWriter(dataSource, sql);
-        //return new JdbcBatchItemWriterBuilder<Person>().dataSource(dataSource).sql(sql).beanMapped().build();
     }
 
+    @Bean
+    public Faker personFaker() {
+        return new Faker();
+    }
 }

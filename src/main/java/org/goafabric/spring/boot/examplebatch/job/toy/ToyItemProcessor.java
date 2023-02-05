@@ -1,4 +1,4 @@
-package org.goafabric.spring.boot.examplebatch.toy;
+package org.goafabric.spring.boot.examplebatch.job.toy;
 
 import lombok.extern.slf4j.Slf4j;
 import org.goafabric.spring.boot.examplebatch.domain.Toy;

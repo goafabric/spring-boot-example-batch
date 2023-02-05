@@ -1,4 +1,4 @@
-package org.goafabric.spring.boot.examplebatch.toy;
+package org.goafabric.spring.boot.examplebatch.job.toy;
 
 import org.goafabric.spring.boot.examplebatch.domain.Toy;
 import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
