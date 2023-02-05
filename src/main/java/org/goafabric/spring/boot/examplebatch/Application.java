@@ -22,17 +22,9 @@ public class Application {
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
             //resources
             hints.resources().registerPattern("catalogdata/*.csv");
+            hints.resources().registerPattern("en/*.yml"); //needed for stupid faker
 
             hints.proxies().registerJdkProxy(AopProxyUtils.completeJdkProxyInterfaces(JobOperator.class));
-
-            /*
-            hints.reflection().registerType(FakeValuesService.class,
-                    MemberCategory.INVOKE_DECLARED_METHODS, MemberCategory.INTROSPECT_DECLARED_CONSTRUCTORS, MemberCategory.DECLARED_FIELDS);
-
-            hints.reflection().registerType(com.github.javafaker.Name.class,
-                    MemberCategory.INVOKE_DECLARED_METHODS, MemberCategory.INTROSPECT_DECLARED_CONSTRUCTORS, MemberCategory.DECLARED_FIELDS);
-
-             */
         }
     }
 

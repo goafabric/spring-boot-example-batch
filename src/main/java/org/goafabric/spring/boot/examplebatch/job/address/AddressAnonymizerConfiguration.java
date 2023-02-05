@@ -68,11 +68,11 @@ public class AddressAnonymizerConfiguration {
 
     @Bean
     @StepScope
-    public ItemProcessor<Address, Address> addressItemProcessor() {
+    public ItemProcessor<Address, Address> addressItemProcessor(Faker faker) {
         return item -> Address.builder()
                 .id(item.getId())
-                .city(addressFaker().address().cityName())
-                .street(addressFaker().address().streetName())
+                .city(faker.address().cityName())
+                .street(faker.address().streetName())
                 .build();
     }
 
@@ -85,7 +85,7 @@ public class AddressAnonymizerConfiguration {
     }
 
     @Bean
-    public Faker addressFaker() {
+    public Faker faker() {
         return new Faker();
     }
 

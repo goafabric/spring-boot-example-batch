@@ -42,10 +42,11 @@ public class PersonAnonymizerConfiguration {
                 .build();
     }
 
-    @Bean(name = "personStep") //name needed for spring-native with Qualifier above + Injection of Reader / Writer .. only works like this, not via bean method call
+    @Bean(name = "personStep")
+    //name needed for spring-native with Qualifier above + Injection of Reader / Writer .. only works like this, not via bean method call
     public Step personStep(ItemReader<Person> personItemReader,
-                            ItemProcessor<Person, Person> personItemProcessor,
-                            ItemWriter<Person> personItemWriter) {
+                           ItemProcessor<Person, Person> personItemProcessor,
+                           ItemWriter<Person> personItemWriter) {
         return new StepBuilder("personStep", jobRepository)
                 .<Person, Person>chunk(2, ptm)
                 .reader(personItemReader)
@@ -55,7 +56,7 @@ public class PersonAnonymizerConfiguration {
     }
 
     @Bean
-    public   ItemReader<Person> personItemReader(DataSource dataSource) {
+    public ItemReader<Person> personItemReader(DataSource dataSource) {
         return new JdbcCursorItemReaderBuilder<Person>()
                 .name("personItemReader")
                 .dataSource(dataSource)
@@ -66,18 +67,14 @@ public class PersonAnonymizerConfiguration {
 
     @Bean
     @StepScope
-    public ItemProcessor<Person, Person> personItemProcessor() {
-        return new PersonItemProcessor(personFaker());
+    public ItemProcessor<Person, Person> personItemProcessor(Faker faker) {
+        return new PersonItemProcessor(faker);
     }
 
     @Bean
     public JdbcBatchItemWriter<Person> personItemWriter(DataSource dataSource) {
-        final String sql = "UPDATE masterdata.person SET first_name = :firstName, last_name = :lastName WHERE id = :id" ;
+        final String sql = "UPDATE masterdata.person SET first_name = :firstName, last_name = :lastName WHERE id = :id";
         return new PersonItemWriter(dataSource, sql);
     }
 
-    @Bean
-    public Faker personFaker() {
-        return new Faker();
-    }
 }
