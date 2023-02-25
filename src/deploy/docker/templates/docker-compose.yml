@@ -3,6 +3,8 @@ services:
   application:
     container_name: ${_Values_root_name}-application
     image: ${_Values_image_repository}${_Values_image_native}:${_Values_image_tag}
+    entrypoint: ${_Values_resources_entrypoint}
+
     environment:
       #application
       TZ: "Europe/Berlin"
@@ -20,8 +22,7 @@ services:
       logging.level.org.goafabric: "INFO"
       logging.level.org.springframework: "INFO"
 
-    command: ["-Xmx${_Values_resources_requests_memory}"]
-    
+
     depends_on:
       postgres:
         condition: service_healthy
