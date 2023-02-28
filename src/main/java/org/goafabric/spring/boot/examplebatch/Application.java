@@ -1,9 +1,7 @@
 package org.goafabric.spring.boot.examplebatch;
 
-import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
-import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportRuntimeHints;
@@ -24,7 +22,7 @@ public class Application {
             hints.resources().registerPattern("catalogdata/*.csv");
             hints.resources().registerPattern("en/*.yml"); //needed for stupid faker
 
-            hints.proxies().registerJdkProxy(AopProxyUtils.completeJdkProxyInterfaces(JobOperator.class));
+            //hints.proxies().registerJdkProxy(AopProxyUtils.completeJdkProxyInterfaces(JobOperator.class));
         }
     }
 
