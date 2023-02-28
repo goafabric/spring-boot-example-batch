@@ -1,7 +1,7 @@
 _Values_root_name="example-batch"
 
 _Values_image_repository=goafabric/spring-boot-example-batch
-_Values_image_tag=3.0.3-SNAPSHOT
+_Values_image_tag=3.0.3
 
 _Values_resources_entrypoint="java -Xms128M -Xmx128M -cp /app/resources:/app/classes:/app/libs/* org.goafabric.spring.boot.examplebatch.Application"
 _Values_resources_entrypoint_native="/workspace/org.goafabric.spring.boot.examplebatch.Application -Xmx32m"
