@@ -4,6 +4,8 @@ services:
     container_name: ${_Values_root_name}-application
     image: ${_Values_image_repository}${_Values_image_native}:${_Values_image_tag}
     entrypoint: ${_Values_resources_entrypoint}
+    networks:
+      - ${_Values_root_name}-net
 
     environment:
       #application
@@ -33,6 +35,8 @@ services:
     restart: 'no'
     ports:
       - 50820:5432
+    networks:
+      - ${_Values_root_name}-net
     environment:
       TZ: "Europe/Berlin"
       POSTGRES_DB: "customer"
@@ -54,3 +58,7 @@ volumes:
   tmp:
   applogs:
   pgdata:
+
+networks:
+  example-batch-net:
+    driver: bridge
