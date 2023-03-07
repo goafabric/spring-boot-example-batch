@@ -14,6 +14,8 @@ services:
 
       #persistence
       spring.datasource.url: "jdbc:postgresql://${_Values_root_name}-postgres:5432/customer"
+      spring.datasource.hikari.maximum-pool-size: "10"
+      spring.datasource.hikari.connection-timeout: "10000"
 
       #secrets
       spring.datasource.username: "example-batch"
