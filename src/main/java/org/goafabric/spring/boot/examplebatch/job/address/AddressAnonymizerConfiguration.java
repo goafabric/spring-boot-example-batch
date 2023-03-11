@@ -17,7 +17,6 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,15 +27,9 @@ import javax.sql.DataSource;
 @Configuration
 @RegisterReflectionForBinding(Address.class)
 public class AddressAnonymizerConfiguration {
-    @Autowired
-    private JobRepository jobRepository;
-
-    @Autowired
-    private PlatformTransactionManager ptm;
-
 
     @Bean
-    public Job addressJob(@Qualifier("addressStep") Step addressStep, JobCompletionListener listener) {
+    public Job addressJob(@Qualifier("addressStep") Step addressStep, JobCompletionListener listener, JobRepository jobRepository) {
         return new JobBuilder("addressJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .listener(listener).flow(addressStep).end()
@@ -46,7 +39,9 @@ public class AddressAnonymizerConfiguration {
     @Bean(name = "addressStep") //name needed for spring-native with Qualifier above + Injection of Reader / Writer .. only works like this, not via bean method call
     public Step addressStep(ItemReader<Address> addressItemReader,
                             ItemProcessor<Address, Address> addressItemProcessor,
-                            ItemWriter<Address> addressItemWriter) {
+                            ItemWriter<Address> addressItemWriter,
+                            JobRepository jobRepository,
+                            PlatformTransactionManager ptm) {
         return new StepBuilder("addressStep", jobRepository)
                 .<Address, Address>chunk(2, ptm)
                 .reader(addressItemReader)
