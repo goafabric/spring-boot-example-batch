@@ -38,14 +38,6 @@ dependencies {
 	//3rd party
 	implementation ('com.github.javafaker:javafaker:1.0.2') { exclude group: 'org.yaml', module: 'snakeyaml' }
 
-	//code generation
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testAnnotationProcessor 'org.projectlombok:lombok'
-
-	implementation 'org.mapstruct:mapstruct'
-	annotationProcessor 'org.mapstruct:mapstruct-processor'
-
 	//persistence
 	implementation 'com.h2database:h2'
 	implementation 'org.postgresql:postgresql'
