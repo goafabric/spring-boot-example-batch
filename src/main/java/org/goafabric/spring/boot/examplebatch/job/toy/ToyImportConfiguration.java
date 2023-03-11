@@ -15,7 +15,6 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,14 +26,9 @@ import javax.sql.DataSource;
 @Configuration
 @RegisterReflectionForBinding(Toy.class)
 public class ToyImportConfiguration {
-    @Autowired
-    private JobRepository jobRepository;
-
-    @Autowired
-    private PlatformTransactionManager ptm;
 
     @Bean
-    public Job toyJob(@Qualifier("toyStep") Step toyStep, JobCompletionListener listener) {
+    public Job toyJob(@Qualifier("toyStep") Step toyStep, JobCompletionListener listener, JobRepository jobRepository) {
         return new JobBuilder("toyJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .listener(listener).flow(toyStep).end()
@@ -44,7 +38,9 @@ public class ToyImportConfiguration {
     @Bean(name = "toyStep")
     public Step toyStep(ItemReader<Toy> toyItemReader,
                            ItemProcessor<Toy, Toy> toyItemProcessor,
-                           ItemWriter<Toy> toyItemWriter) {
+                           ItemWriter<Toy> toyItemWriter,
+                           JobRepository jobRepository,
+                           PlatformTransactionManager ptm) {
         return new StepBuilder("toyStep", jobRepository)
                 .<Toy, Toy>chunk(2, ptm)
                 .reader(toyItemReader)

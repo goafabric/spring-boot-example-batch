@@ -17,7 +17,6 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,14 +27,9 @@ import javax.sql.DataSource;
 @Configuration
 @RegisterReflectionForBinding(Person.class)
 public class PersonAnonymizerConfiguration {
-    @Autowired
-    private JobRepository jobRepository;
-
-    @Autowired
-    private PlatformTransactionManager ptm;
 
     @Bean
-    public Job personJob(@Qualifier("personStep") Step personStep, JobCompletionListener listener) {
+    public Job personJob(@Qualifier("personStep") Step personStep, JobCompletionListener listener, JobRepository jobRepository) {
         return new JobBuilder("personJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .listener(listener).flow(personStep).end()
@@ -46,7 +40,9 @@ public class PersonAnonymizerConfiguration {
     //name needed for spring-native with Qualifier above + Injection of Reader / Writer .. only works like this, not via bean method call
     public Step personStep(ItemReader<Person> personItemReader,
                            ItemProcessor<Person, Person> personItemProcessor,
-                           ItemWriter<Person> personItemWriter) {
+                           ItemWriter<Person> personItemWriter,
+                           JobRepository jobRepository,
+                           PlatformTransactionManager ptm) {
         return new StepBuilder("personStep", jobRepository)
                 .<Person, Person>chunk(2, ptm)
                 .reader(personItemReader)

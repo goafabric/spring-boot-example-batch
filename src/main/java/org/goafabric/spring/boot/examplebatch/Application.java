@@ -21,8 +21,6 @@ public class Application {
             //resources
             hints.resources().registerPattern("catalogdata/*.csv");
             hints.resources().registerPattern("en/*.yml"); //needed for stupid faker
-
-            //hints.proxies().registerJdkProxy(AopProxyUtils.completeJdkProxyInterfaces(JobOperator.class));
         }
     }
 
