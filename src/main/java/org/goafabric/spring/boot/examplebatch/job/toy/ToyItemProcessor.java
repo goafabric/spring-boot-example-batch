@@ -12,12 +12,12 @@ public class ToyItemProcessor implements ItemProcessor<Toy, Toy> {
 
     @Override
     public Toy process(Toy toy) {
-        return Toy.builder()
-                .id(toy.getId())
-                .catalogVersion(catalogVersion)
-                .toyName(toy.getToyName().toLowerCase())
-                .price(toy.getPrice())
-                .build();
+        return new Toy(
+            toy.id(),
+            catalogVersion,
+            toy.toyName().toLowerCase(),
+            toy.price()
+        );
     }
 
 }

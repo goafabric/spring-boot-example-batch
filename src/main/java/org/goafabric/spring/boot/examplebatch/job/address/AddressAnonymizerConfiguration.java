@@ -71,12 +71,12 @@ public class AddressAnonymizerConfiguration {
         return new ItemProcessor<Address, Address>() {
 
             @Override
-            public Address process(Address item) throws Exception {
-                return Address.builder()
-                        .id(item.getId())
-                        .city("fake-city") //faker.address().cityName())
-                        .street("fake-street") //faker.address().streetName())
-                        .build();
+            public Address process(Address item) {
+                return new Address(
+                        item.id(),
+                        "fake-city",
+                        "fake-street"
+                );
             }
         };
     }
