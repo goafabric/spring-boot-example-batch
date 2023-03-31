@@ -12,7 +12,6 @@ public class ToyItemProcessor implements ItemProcessor<Toy, Toy> {
     public Toy process(Toy toy) {
         return new Toy(
             toy.id(),
-            catalogVersion,
             toy.toyName().toLowerCase(),
             toy.price()
         );

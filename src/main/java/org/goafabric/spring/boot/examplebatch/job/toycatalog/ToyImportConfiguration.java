@@ -14,7 +14,7 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
-import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
+import org.springframework.batch.item.file.mapping.RecordFieldSetMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -56,9 +56,9 @@ public class ToyImportConfiguration {
                 .resource(new ClassPathResource("catalogdata/toy-catalog.csv"))
                 .delimited()
                 .names(new String[]{"id", "toyName", "price"})
-                .fieldSetMapper(new BeanWrapperFieldSetMapper<Toy>() {{
-                    setTargetType(Toy.class);
-                }}).build();
+                .fieldSetMapper(new RecordFieldSetMapper(Toy.class))
+                .build();
+
     }
 
     @Bean
@@ -69,7 +69,7 @@ public class ToyImportConfiguration {
 
     @Bean
     public ItemWriter<Toy> toyItemWriter(DataSource dataSource) {
-        final String sql = "INSERT INTO masterdata.toy_catalog (id, catalog_version, toy_name, price) VALUES (:id, :catalogVersion, :toyName, :price)";
+        final String sql = "INSERT INTO masterdata.toy_catalog (id, toy_name, price) VALUES (:id, :toyName, :price)";
         return new ToyItemWriter(dataSource, sql);
     }
 }
