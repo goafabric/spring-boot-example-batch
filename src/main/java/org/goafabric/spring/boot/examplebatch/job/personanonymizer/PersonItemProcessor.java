@@ -1,4 +1,4 @@
-package org.goafabric.spring.boot.examplebatch.job.person;
+package org.goafabric.spring.boot.examplebatch.job.personanonymizer;
 
 import com.github.javafaker.Faker;
 import org.goafabric.spring.boot.examplebatch.domain.Person;
