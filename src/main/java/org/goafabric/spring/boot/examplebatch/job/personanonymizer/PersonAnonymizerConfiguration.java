@@ -1,7 +1,7 @@
 package org.goafabric.spring.boot.examplebatch.job.personanonymizer;
 
 
-import com.github.javafaker.Faker;
+import net.datafaker.Faker;
 import org.goafabric.spring.boot.examplebatch.domain.Person;
 import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;

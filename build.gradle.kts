@@ -33,8 +33,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-batch")
 
 	//3rd party
-	implementation("com.github.javafaker:javafaker:1.0.2") {exclude("org.yaml", "snakeyaml")}
-
+	implementation("net.datafaker:datafaker:1.8.1") { exclude("org.yaml", "snakeyaml") }
+	
 	//persistence
 	implementation("com.h2database:h2")
 	implementation("org.postgresql:postgresql")
