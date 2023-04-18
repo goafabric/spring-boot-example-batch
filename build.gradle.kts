@@ -4,6 +4,10 @@ group = "org.goafabric"
 version = "3.0.5-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
+val dockerRegistry = "goafabric"
+val nativeBuilder = "dashaun/builder:20230225"
+val baseImage = "ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff538cf22a20b768d7755dad80922a89b73b2fddd80dd79f9b880a1"
+
 plugins {
 	java
 	jacoco
@@ -49,10 +53,6 @@ tasks.withType<Test> {
 	exclude("**/*NRIT*")
 	finalizedBy("jacocoTestReport")
 }
-
-val dockerRegistry = "goafabric"
-val nativeBuilder = "dashaun/builder:20230225"
-val baseImage = "ibm-semeru-runtimes:open-17.0.6_10-jre-focal@sha256:739eab970ff538cf22a20b768d7755dad80922a89b73b2fddd80dd79f9b880a1"
 
 jib {
 	val amd64 = com.google.cloud.tools.jib.gradle.PlatformParameters(); amd64.os = "linux"; amd64.architecture = "amd64"; val arm64 = com.google.cloud.tools.jib.gradle.PlatformParameters(); arm64.os = "linux"; arm64.architecture = "arm64"
