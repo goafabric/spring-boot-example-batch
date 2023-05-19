@@ -4,6 +4,8 @@ import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.flyway.FlywayConfigurationCustomizer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportRuntimeHints;
 
 //@EnableBatchProcessing
@@ -22,6 +24,11 @@ public class Application {
             hints.resources().registerPattern("catalogdata/*.csv");
             hints.resources().registerPattern("en/*.yml"); //needed for stupid faker
         }
+    }
+
+    @Bean
+    FlywayConfigurationCustomizer flywayLoggingCustomizer() {
+        return (configuration) -> configuration.loggers("slf4j");
     }
 
 }
