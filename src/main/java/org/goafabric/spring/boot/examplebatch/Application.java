@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportRuntimeHints;
 
-//@EnableBatchProcessing
 @SpringBootApplication
 @ImportRuntimeHints(Application.ApplicationRuntimeHints.class)
 public class Application {
