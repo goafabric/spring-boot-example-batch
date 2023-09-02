@@ -1,6 +1,3 @@
--- separate schema
-CREATE SCHEMA IF NOT EXISTS masterdata;
-
 -- catalog tables
 CREATE TABLE masterdata.person (
    	id varchar(36) not null
