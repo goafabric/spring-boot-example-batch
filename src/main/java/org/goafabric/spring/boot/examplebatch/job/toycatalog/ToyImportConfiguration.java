@@ -46,6 +46,7 @@ public class ToyImportConfiguration {
                 .reader(toyItemReader)
                 .processor(toyItemProcessor)
                 .writer(toyItemWriter)
+                //.faultTolerant().skip(IncorrectTokenCountException.class)
                 .build();
     }
 
