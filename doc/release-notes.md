@@ -1,8 +1,10 @@
 # 3.1.1
-- upgrade to Spring Boot 3.1.1
+- java 20 compatibility + jvm baseimage updated to java 20
+- upgrade to Spring Boot 3.1.3
+- various dependency upgrades
+
 - maven build (re) moved to doc/maven in favour of gradle
 - kicked lombok in favour of java records
-- java 20 compatibility + jvm baseimage updated to java 20
 
 # 3.0.3
 - upgrade to Spring Boot 3.0.3
