@@ -1,6 +1,6 @@
-# 3.1.1
+# 3.1.4
 - java 21 upgrade
-- upgrade to Spring Boot 3.1.3
+- upgrade to Spring Boot 3.1.4
 - various dependency upgrades
 
 - maven build (re) moved to doc/maven in favour of gradle
