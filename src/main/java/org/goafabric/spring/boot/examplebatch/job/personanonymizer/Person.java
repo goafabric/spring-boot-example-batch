@@ -1,4 +1,4 @@
-package org.goafabric.spring.boot.examplebatch.domain;
+package org.goafabric.spring.boot.examplebatch.job.personanonymizer;
 
 public record Person (
     String id,

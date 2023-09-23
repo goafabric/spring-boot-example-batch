@@ -1,6 +1,5 @@
 package org.goafabric.spring.boot.examplebatch.job.toycatalog;
 
-import org.goafabric.spring.boot.examplebatch.domain.Toy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.Chunk;

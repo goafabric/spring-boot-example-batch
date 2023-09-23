@@ -2,7 +2,6 @@ package org.goafabric.spring.boot.examplebatch.job.personanonymizer;
 
 
 import net.datafaker.Faker;
-import org.goafabric.spring.boot.examplebatch.domain.Person;
 import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.batch.core.Job;
@@ -65,7 +64,7 @@ public class PersonAnonymizerConfiguration {
     @Bean
     @StepScope
     public ItemProcessor<Person, Person> personItemProcessor(Faker faker) {
-        return new PersonItemProcessor(faker);
+        return person -> new Person(person.id(), "anonymized firstname", "anonymized lastname");
     }
 
     @Bean

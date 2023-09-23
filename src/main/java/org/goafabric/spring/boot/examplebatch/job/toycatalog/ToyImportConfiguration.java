@@ -1,6 +1,5 @@
 package org.goafabric.spring.boot.examplebatch.job.toycatalog;
 
-import org.goafabric.spring.boot.examplebatch.domain.Toy;
 import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.batch.core.Job;
@@ -65,7 +64,11 @@ public class ToyImportConfiguration {
     @Bean
     @StepScope
     public ItemProcessor<Toy, Toy> toyItemProcessor() {
-        return new ToyItemProcessor();
+        return toy -> new Toy(
+                toy.id(),
+                toy.toyName().toLowerCase(),
+                toy.price()
+        );
     }
 
     @Bean
