@@ -14,19 +14,20 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.RecordFieldSetMapper;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import java.util.UUID;
+
 @Configuration
 @RegisterReflectionForBinding(Toy.class)
 public class ToyImportConfiguration {
 
     @Bean
-    public Job toyJob(@Qualifier("toyStep") Step toyStep, JobCompletionListener listener, JobRepository jobRepository) {
+    public Job toyJob(Step toyStep, JobCompletionListener listener, JobRepository jobRepository) {
         return new JobBuilder("toyJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .listener(listener).flow(toyStep).end()
@@ -64,7 +65,7 @@ public class ToyImportConfiguration {
     @StepScope
     public ItemProcessor<Toy, Toy> toyItemProcessor() {
         return toy -> new Toy(
-                toy.id(), toy.version(),
+                UUID.randomUUID().toString(), null,
                 toy.toyName().toLowerCase(),
                 toy.price()
         );
