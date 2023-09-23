@@ -2,6 +2,8 @@ package org.goafabric.spring.boot.examplebatch.job.personanonymizer;
 
 
 import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -10,23 +12,19 @@ import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.data.builder.RepositoryItemWriterBuilder;
-import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
+import org.springframework.batch.item.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import javax.sql.DataSource;
+import java.util.Iterator;
 
 @Configuration
 @RegisterReflectionForBinding(Person.class)
 public class PersonAnonymizerConfiguration {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Bean
     public Job personJob(@Qualifier("personStep") Step personStep, JobCompletionListener listener, JobRepository jobRepository) {
@@ -52,13 +50,15 @@ public class PersonAnonymizerConfiguration {
     }
 
     @Bean
-    public ItemReader<Person> personItemReader(DataSource dataSource) {
-        return new JdbcCursorItemReaderBuilder<Person>()
-                .name("personItemReader")
-                .dataSource(dataSource)
-                .rowMapper(new DataClassRowMapper<>(Person.class))
-                .sql("SELECT * FROM masterdata.person")
-                .build();
+    public ItemReader<Person> personItemReader(PersonRepository repository) {
+        return new ItemReader<>() {
+            private final Iterator<Person> persons = repository.findAll().iterator();
+
+            @Override
+            public Person read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+                return persons.hasNext() ? persons.next() : null;
+            }
+        };
     }
 
     @Bean
@@ -69,8 +69,7 @@ public class PersonAnonymizerConfiguration {
 
     @Bean
     public ItemWriter<Person> personItemWriter(PersonRepository repository) {
-        return new RepositoryItemWriterBuilder<Person>()
-                .repository(repository).build();
+        return chunk -> repository.saveAll(chunk.getItems());
     }
 
     interface PersonRepository extends CrudRepository<Person, String> {}

@@ -12,7 +12,6 @@ import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.data.builder.RepositoryItemWriterBuilder;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.RecordFieldSetMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -73,9 +72,7 @@ public class ToyImportConfiguration {
 
     @Bean
     public ItemWriter<Toy> toyItemWriter(ToyRepository repository) {
-        return new RepositoryItemWriterBuilder<Toy>()
-                .repository(repository)
-                .build();
+        return chunk -> repository.saveAll(chunk.getItems());
     }
 
     interface ToyRepository extends CrudRepository<Toy, String> {}
