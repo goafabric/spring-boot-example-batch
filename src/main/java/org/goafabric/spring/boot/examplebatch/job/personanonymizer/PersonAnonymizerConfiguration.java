@@ -13,11 +13,11 @@ import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -67,9 +67,9 @@ public class PersonAnonymizerConfiguration {
     }
 
     @Bean
-    public JdbcBatchItemWriter<Person> personItemWriter(DataSource dataSource) {
-        final String sql = "UPDATE masterdata.person SET first_name = :firstName, last_name = :lastName WHERE id = :id";
-        return new PersonItemWriter(dataSource, sql);
+    public ItemWriter<Person> personItemWriter(PersonRepository repository) {
+        return chunk -> repository.saveAll(chunk.getItems());
     }
 
+    interface PersonRepository extends CrudRepository<Person, String> {}
 }
