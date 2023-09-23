@@ -13,6 +13,7 @@ import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.data.builder.RepositoryItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -68,7 +69,8 @@ public class PersonAnonymizerConfiguration {
 
     @Bean
     public ItemWriter<Person> personItemWriter(PersonRepository repository) {
-        return chunk -> repository.saveAll(chunk.getItems());
+        return new RepositoryItemWriterBuilder<Person>()
+                .repository(repository).build();
     }
 
     interface PersonRepository extends CrudRepository<Person, String> {}
