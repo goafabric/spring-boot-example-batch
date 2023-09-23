@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Configuration
@@ -26,7 +27,7 @@ import java.util.stream.Stream;
 public class PersonAnonymizerConfiguration {
 
     @Bean
-    public Job personJob( Step personStep, JobCompletionListener listener, JobRepository jobRepository) {
+    public Job personJob(Step personStep, JobCompletionListener listener, JobRepository jobRepository) {
         return new JobBuilder("personJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
                 .listener(listener).flow(personStep).end()
@@ -50,6 +51,7 @@ public class PersonAnonymizerConfiguration {
 
     @Bean
     public ItemReader<Person> personItemReader(PersonRepository repository) {
+        demoDataImport(repository);
         return new IteratorItemReader<>(repository.findAllBy().iterator());
     }
 
@@ -62,6 +64,12 @@ public class PersonAnonymizerConfiguration {
     @Bean
     public ItemWriter<Person> personItemWriter(PersonRepository repository) {
         return chunk -> repository.saveAll(chunk.getItems());
+    }
+
+    public void demoDataImport(PersonRepository repository) {
+        repository.save(new Person(UUID.randomUUID().toString(), null, "Homer", "Simpson"));
+        repository.save(new Person(UUID.randomUUID().toString(), null, "Bart", "Simpson"));
+        repository.save(new Person(UUID.randomUUID().toString(), null, "Monty", "Burns"));
     }
 
     interface PersonRepository extends CrudRepository<Person, String> {
