@@ -38,7 +38,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-batch")
 
 	//persistence
-	implementation("org.springframework.boot:spring-boot-starter-jdbc")
+	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
 	implementation("com.h2database:h2")
 	implementation("org.postgresql:postgresql")
 	implementation("org.flywaydb:flyway-core")

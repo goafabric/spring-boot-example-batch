@@ -21,6 +21,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
+import java.util.UUID;
 
 @Configuration
 @RegisterReflectionForBinding(Toy.class)
@@ -65,7 +66,7 @@ public class ToyImportConfiguration {
     @StepScope
     public ItemProcessor<Toy, Toy> toyItemProcessor() {
         return toy -> new Toy(
-                toy.id(),
+                UUID.randomUUID().toString(),
                 toy.toyName().toLowerCase(),
                 toy.price()
         );
