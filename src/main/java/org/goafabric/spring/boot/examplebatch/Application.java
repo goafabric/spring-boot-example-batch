@@ -19,7 +19,6 @@ public class Application {
         public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
             //resources
             hints.resources().registerPattern("catalogdata/*.csv");
-            hints.resources().registerPattern("en/*.yml"); //needed for stupid faker
         }
     }
 
