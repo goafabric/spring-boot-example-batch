@@ -63,7 +63,7 @@ public class PersonAnonymizerConfiguration {
     @Bean
     @StepScope
     public ItemProcessor<Person, Person> personItemProcessor() {
-        return person -> new Person(person.id(), "anonymized firstname", "anonymized lastname");
+        return person -> new Person(person.id(), person.version(), "anonymized firstname", "anonymized lastname");
     }
 
     @Bean

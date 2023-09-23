@@ -18,10 +18,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.PlatformTransactionManager;
-
-import javax.sql.DataSource;
-import java.util.UUID;
 
 @Configuration
 @RegisterReflectionForBinding(Toy.class)
@@ -56,7 +54,7 @@ public class ToyImportConfiguration {
                 .name("toyItemReader")
                 .resource(new ClassPathResource("catalogdata/toy-catalog.csv"))
                 .delimited()
-                .names(new String[]{"id", "toyName", "price"})
+                .names(new String[]{"id", "version", "toyName", "price"})
                 .fieldSetMapper(new RecordFieldSetMapper(Toy.class))
                 .build();
 
@@ -66,15 +64,16 @@ public class ToyImportConfiguration {
     @StepScope
     public ItemProcessor<Toy, Toy> toyItemProcessor() {
         return toy -> new Toy(
-                UUID.randomUUID().toString(),
+                toy.id(), toy.version(),
                 toy.toyName().toLowerCase(),
                 toy.price()
         );
     }
 
     @Bean
-    public ItemWriter<Toy> toyItemWriter(DataSource dataSource) {
-        final String sql = "INSERT INTO masterdata.toy_catalog (id, toy_name, price) VALUES (:id, :toyName, :price)";
-        return new ToyItemWriter(dataSource, sql);
+    public ItemWriter<Toy> toyItemWriter(ToyRepository repository) {
+        return chunk -> repository.saveAll(chunk.getItems());
     }
+
+    interface ToyRepository extends CrudRepository<Toy, String> {}
 }
