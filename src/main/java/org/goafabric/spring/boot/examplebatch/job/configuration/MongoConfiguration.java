@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 @ConditionalOnProperty(value = "spring.profiles.active", havingValue = "mongodb", matchIfMissing = false)
-@EnableAutoConfiguration(exclude = {JdbcRepositoriesAutoConfiguration.class})
+@EnableAutoConfiguration(exclude = {JdbcRepositoriesAutoConfiguration.class}) //we cannot disable DataSourceConfiguration because Spring Batch needs it for In Memory Metadata
 @EnableMongoRepositories(considerNestedRepositories = true, basePackageClasses = Application.class)
 public class MongoConfiguration {
 }
