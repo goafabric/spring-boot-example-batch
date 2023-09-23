@@ -12,14 +12,17 @@ import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.item.*;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.support.IteratorItemReader;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import java.util.Iterator;
+import java.util.stream.Stream;
 
 @Configuration
 @RegisterReflectionForBinding(Person.class)
@@ -51,14 +54,7 @@ public class PersonAnonymizerConfiguration {
 
     @Bean
     public ItemReader<Person> personItemReader(PersonRepository repository) {
-        return new ItemReader<>() {
-            private final Iterator<Person> persons = repository.findAll().iterator();
-
-            @Override
-            public Person read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-                return persons.hasNext() ? persons.next() : null;
-            }
-        };
+        return new IteratorItemReader<>(repository.findAllBy().iterator());
     }
 
     @Bean
@@ -72,5 +68,7 @@ public class PersonAnonymizerConfiguration {
         return chunk -> repository.saveAll(chunk.getItems());
     }
 
-    interface PersonRepository extends CrudRepository<Person, String> {}
+    interface PersonRepository extends CrudRepository<Person, String> {
+        Stream<Person> findAllBy();
+    }
 }
