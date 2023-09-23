@@ -5,7 +5,9 @@ CREATE TABLE masterdata.person (
 			primary key,
 
     first_name VARCHAR(20),
-    last_name VARCHAR(20)
+    last_name VARCHAR(20),
+
+    version bigint default 0
 );
 
 insert into masterdata.person (id, first_name, last_name) values ('84b27449-3ac5-4e3f-81b7-345d25c56210', 'Homer', 'Simpson');
