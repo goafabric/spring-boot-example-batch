@@ -17,8 +17,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import java.util.UUID;
-
 @Configuration
 @RegisterReflectionForBinding(Toy.class)
 public class ToyImportConfiguration {
@@ -50,8 +48,7 @@ public class ToyImportConfiguration {
                 .resource(new ClassPathResource("catalogdata/toy-catalog.csv"))
                 .delimited()
                 .names("toyName", "price")
-                .fieldSetMapper(fieldSet -> new Toy(UUID.randomUUID().toString(), null,
-                        fieldSet.readString("toyName"), fieldSet.readString("price")))
+                .fieldSetMapper(fieldSet -> new Toy(fieldSet.readString("toyName"), fieldSet.readString("price")))
                 .build();
 
     }
