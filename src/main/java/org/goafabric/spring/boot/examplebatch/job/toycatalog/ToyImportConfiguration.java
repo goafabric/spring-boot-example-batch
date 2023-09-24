@@ -4,12 +4,10 @@ import org.goafabric.spring.boot.examplebatch.job.JobCompletionListener;
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
@@ -35,16 +33,13 @@ public class ToyImportConfiguration {
 
     @Bean(name = "toyStep")
     public Step toyStep(ItemReader<Toy> toyItemReader,
-                           ItemProcessor<Toy, Toy> toyItemProcessor,
                            ItemWriter<Toy> toyItemWriter,
                            JobRepository jobRepository,
                            PlatformTransactionManager ptm) {
         return new StepBuilder("toyStep", jobRepository)
                 .<Toy, Toy>chunk(2, ptm)
                 .reader(toyItemReader)
-                .processor(toyItemProcessor)
                 .writer(toyItemWriter)
-                //.faultTolerant().skip(IncorrectTokenCountException.class)
                 .build();
     }
 
@@ -54,20 +49,11 @@ public class ToyImportConfiguration {
                 .name("toyItemReader")
                 .resource(new ClassPathResource("catalogdata/toy-catalog.csv"))
                 .delimited()
-                .names("id", "version", "toyName", "price")
-                .targetType(Toy.class)
+                .names("toyName", "price")
+                .fieldSetMapper(fieldSet -> new Toy(UUID.randomUUID().toString(), null,
+                        fieldSet.readString("toyName"), fieldSet.readString("price")))
                 .build();
 
-    }
-
-    @Bean
-    @StepScope
-    public ItemProcessor<Toy, Toy> toyItemProcessor() {
-        return toy -> new Toy(
-                UUID.randomUUID().toString(), null,
-                toy.toyName().toLowerCase(),
-                toy.price()
-        );
     }
 
     @Bean
