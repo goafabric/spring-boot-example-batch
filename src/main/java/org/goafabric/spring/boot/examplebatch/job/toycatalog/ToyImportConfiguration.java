@@ -13,7 +13,6 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
-import org.springframework.batch.item.file.mapping.RecordFieldSetMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -55,8 +54,8 @@ public class ToyImportConfiguration {
                 .name("toyItemReader")
                 .resource(new ClassPathResource("catalogdata/toy-catalog.csv"))
                 .delimited()
-                .names(new String[]{"id", "version", "toyName", "price"})
-                .fieldSetMapper(new RecordFieldSetMapper(Toy.class))
+                .names("id", "version", "toyName", "price")
+                .targetType(Toy.class)
                 .build();
 
     }
