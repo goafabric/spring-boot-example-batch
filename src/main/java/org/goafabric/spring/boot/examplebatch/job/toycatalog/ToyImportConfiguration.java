@@ -14,7 +14,6 @@ import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
@@ -58,5 +57,4 @@ public class ToyImportConfiguration {
         return chunk -> repository.saveAll(chunk.getItems());
     }
 
-    interface ToyRepository extends CrudRepository<Toy, String> {}
 }

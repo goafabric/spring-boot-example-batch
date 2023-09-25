@@ -25,8 +25,11 @@ spring:
 spring.flyway.default-schema: masterdata #flyway will create the schema if it does not exist yet, hence we need to do still create it with "if exists" for H2
 
 #mongo
+spring.autoconfigure.exclude: ${mongodb.autoconfiguration}
 spring.data.mongodb.uri: "mongodb://mongodb:mongodb@localhost:27017/masterdata?authSource=admin"
-#spring.profiles.active: "mongodb"
+
+mongodb.autoconfiguration: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration, org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration, org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
+jdbc.autoconfiguration: "org.springframework.boot.autoconfigure.data.jdbc.JdbcRepositoriesAutoConfiguration"
 
 #log levels
 logging.level.root: "WARN"

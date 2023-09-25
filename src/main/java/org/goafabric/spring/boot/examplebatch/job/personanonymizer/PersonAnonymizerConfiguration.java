@@ -16,11 +16,9 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.support.IteratorItemReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import java.util.UUID;
-import java.util.stream.Stream;
 
 @Configuration
 @RegisterReflectionForBinding(Person.class)
@@ -72,7 +70,4 @@ public class PersonAnonymizerConfiguration {
         repository.save(new Person(UUID.randomUUID().toString(), null, "Monty", "Burns"));
     }
 
-    interface PersonRepository extends CrudRepository<Person, String> {
-        Stream<Person> findAllBy();
-    }
 }
