@@ -26,7 +26,6 @@ services:
       logging.level.org.goafabric: "INFO"
       logging.level.org.springframework: "INFO"
 
-
     depends_on:
       postgres:
         condition: service_healthy

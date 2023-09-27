@@ -1,0 +1,28 @@
+services:
+  application:
+    depends_on:
+      mongodb:
+        condition: service_started
+    environment:
+      spring.data.mongodb.uri: "mongodb://mongodb:mongodb@mongodb:27017/search?authSource=admin"
+      spring.autoconfigure.exclude: "$${jdbc.autoconfiguration}"
+
+  mongodb:
+    image: mongo:7.0.1
+    container_name: ${_Values_root_name}-mongodb
+    restart: 'no'
+    ports:
+      - 27017:27017
+    volumes:
+      - mongoconfig:/data/configdb
+      - mongodata:/data/db
+    networks:
+      - ${_Values_root_name}-net
+    environment:
+      TZ: "Europe/Berlin"
+      MONGO_INITDB_ROOT_USERNAME: "mongodb"
+      MONGO_INITDB_ROOT_PASSWORD: "mongodb"
+
+volumes:
+  mongoconfig:
+  mongodata:

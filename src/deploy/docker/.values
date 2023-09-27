@@ -5,3 +5,5 @@ _Values_image_tag=3.1.4-SNAPSHOT
 
 _Values_resources_entrypoint="java -Xms128M -Xmx128M -cp /app/resources:/app/classes:/app/libs/* org.goafabric.spring.boot.examplebatch.Application"
 _Values_resources_entrypoint_native="/app/application -Xmx64m"
+
+#_Values_profile=-mongodb
