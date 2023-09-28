@@ -26,7 +26,7 @@ spring.flyway.default-schema: masterdata #flyway will create the schema if it do
 
 #mongo
 spring.autoconfigure.exclude: ${mongodb.autoconfiguration}
-spring.data.mongodb.uri: "mongodb://mongodb:mongodb@localhost:27017/masterdata?authSource=admin"
+spring.data.mongodb.uri: "mongodb://mongodb:mongodb@localhost:27017/catalog?authSource=admin"
 
 mongodb.autoconfiguration: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration, org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration, org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
 jdbc.autoconfiguration: "org.springframework.boot.autoconfigure.data.jdbc.JdbcRepositoriesAutoConfiguration"
