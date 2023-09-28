@@ -13,7 +13,7 @@ services:
       spring.batch.scheduler.enabled: "true"
 
       #persistence
-      spring.datasource.url: "jdbc:postgresql://${_Values_root_name}-postgres:5432/customer"
+      spring.datasource.url: "jdbc:postgresql://${_Values_root_name}-postgres:5432/catalog"
       spring.datasource.hikari.maximum-pool-size: "10"
       spring.datasource.hikari.connection-timeout: "10000"
 
