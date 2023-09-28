@@ -5,6 +5,7 @@
 
 - maven build (re) moved to doc/maven in favour of gradle
 - kicked lombok in favour of java records
+- spring data jdbc added instead of batch jdbc
 
 # 3.0.3
 - upgrade to Spring Boot 3.0.3
