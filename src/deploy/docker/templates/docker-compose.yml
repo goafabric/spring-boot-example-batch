@@ -40,7 +40,7 @@ services:
       - ${_Values_root_name}-net
     environment:
       TZ: "Europe/Berlin"
-      POSTGRES_DB: "customer"
+      POSTGRES_DB: "catalog"
 
       #secrets
       POSTGRES_USER: "example-batch"
