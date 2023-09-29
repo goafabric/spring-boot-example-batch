@@ -6,6 +6,7 @@ services:
     environment:
       spring.data.mongodb.uri: "mongodb://mongodb:mongodb@mongodb:27017/catalog?authSource=admin"
       spring.autoconfigure.exclude: "$${jdbc.autoconfiguration}"
+      spring.datasource.url: jdbc:h2:mem:catalog;MODE=POSTGRESQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;NON_KEYWORDS=VALUE
 
   mongodb:
     image: mongo:7.0.1
